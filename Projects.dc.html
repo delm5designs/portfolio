@@ -63,6 +63,13 @@
         </div>
       </div>
     </sc-for>
+    <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+      <div style="border:1px solid var(--border-subtle);border-radius:2px;background:var(--surface-card,#fdfbf4);padding:32px 28px;display:flex;flex-direction:column;gap:10px;">
+        <div style="font-family:Newsreader,serif;font-size:19px;color:var(--text-strong,#2a2030);">No case study written up under this thread yet.</div>
+        <p style="margin:0;font-size:15px;line-height:1.6;color:var(--text-body,#4a3f50);max-width:56ch;">{{ emptyTopic }} runs through my work, but it doesn't have a published case study yet. The credential behind this thread is on the Credentials page.</p>
+        <a href="{{ emptyHref }}" style="font-size:14.5px;margin-top:2px;">See the credential &rarr;</a>
+      </div>
+    </sc-if>
   </div>
 
 </div>
@@ -158,7 +165,12 @@ class Component extends DCLogic {
       return { title: p.title, scope: p.scope, steps, openCount };
     });
 
-    return { filters, visibleProjects };
+    return {
+      filters, visibleProjects,
+      isEmpty: visibleProjects.length === 0,
+      emptyTopic: s.activeTopic,
+      emptyHref: `Credentials.dc.html?topic=${encodeURIComponent(s.activeTopic)}`,
+    };
   }
 }
 
