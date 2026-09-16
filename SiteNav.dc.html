@@ -8,7 +8,7 @@
 <body>
 <x-dc>
 <nav style="display:flex;align-items:center;justify-content:space-between;padding:28px 5vw;border-bottom:1px solid var(--border-subtle);font-family:Archivo,sans-serif;">
-  <a href="Home.dc.html" style="font-family:Newsreader,serif;font-size:15px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-strong,#2a2030);text-decoration:none;">Elena Filipova</a>
+  <a href="index.html" style="font-family:Newsreader,serif;font-size:15px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-strong,#2a2030);text-decoration:none;">Elena Filipova</a>
   <div style="display:flex;gap:28px;">
     <sc-for list="{{ links }}" as="link" hint-placeholder-count="5">
       <a href="{{ link.href }}" style="{{ link.style }}">{{ link.label }}</a>
@@ -22,7 +22,7 @@ class Component extends DCLogic {
   renderVals() {
     const active = this.props.active;
     const items = [
-      { key: 'home', label: 'Home', href: 'Home.dc.html' },
+      { key: 'home', label: 'Home', href: 'index.html' },
       { key: 'projects', label: 'Projects', href: 'Projects.dc.html' },
       { key: 'tools', label: 'Tools', href: 'Tools.dc.html' },
       { key: 'credentials', label: 'Credentials', href: 'Credentials.dc.html' },
