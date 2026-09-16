@@ -1,0 +1,49 @@
+/* Morana type: Newsreader for display and editorial voice, Archivo for everything
+   functional. Headlines are serif and never bold - weight 300/400 at large sizes. */
+:root{
+  --font-display:"Newsreader",Georgia,"Times New Roman",serif;
+  --font-sans:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+
+  --text-3xs:0.6875rem; /* 11px - vertical rail, legal */
+  --text-2xs:0.75rem;   /* 12px - eyebrow, label */
+  --text-xs:0.8125rem;  /* 13px - language toggle, meta */
+  --text-sm:0.90625rem; /* 14.5px - nav, small body */
+  --text-base:1.09375rem; /* 17.5px - body */
+  --text-md:1.25rem;    /* 20px - lead paragraph */
+  --text-lg:1.4375rem;  /* 23px - card title */
+  --text-xl:1.75rem;    /* 28px - section heading */
+  --text-2xl:2.5rem;    /* 40px - page title */
+  --text-3xl:3.5rem;    /* 56px - statement */
+  --text-4xl:5rem;      /* 80px - hero */
+
+  --leading-tight:1;
+  --leading-display:1.01;
+  --leading-snug:1.3;
+  --leading-body:1.6;
+  --leading-loose:1.72;
+
+  --tracking-display:-0.024em;
+  --tracking-title:-0.018em;
+  --tracking-normal:0;
+  --tracking-label:0.2em;
+  --tracking-wordmark:0.24em;
+  --tracking-rail:0.34em;
+
+  --weight-regular:400;
+  --weight-medium:500;
+  --weight-semibold:600;
+  --weight-display:400;
+  --weight-display-light:300;
+
+  /* Semantic roles */
+  --type-hero-font:var(--font-display);
+  --type-hero-size:clamp(2.625rem,5.6vw,var(--text-4xl));
+  --type-hero-weight:var(--weight-display);
+  --type-statement-size:clamp(2rem,4.2vw,var(--text-3xl));
+  --type-title-size:var(--text-2xl);
+  --type-section-size:var(--text-xl);
+  --type-body-size:var(--text-base);
+  --type-body-leading:var(--leading-body);
+  --type-eyebrow-size:var(--text-2xs);
+  --type-eyebrow-tracking:var(--tracking-label);
+}

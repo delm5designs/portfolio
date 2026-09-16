@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/shape.css">
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/styles.css">
+  <script src="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/_ds_bundle.js"></script>
+  <style>
+    body { margin: 0; background: var(--surface-page, #fbf7ea); }
+    a { color: var(--olive-600, #6f7c33); text-decoration: none; }
+    a:hover { color: var(--plum-500, #56466b); }
+  </style>
+</helmet>
+
+<dc-import name="SiteNav" active="projects" hint-size="100%,80px"></dc-import>
+
+<div style="max-width:1140px;margin:0 auto;padding:64px 5vw 120px;display:flex;flex-direction:column;gap:48px;font-family:Archivo,sans-serif;">
+
+  <x-import component-from-global-scope="MoranaDesignSystem_7dc002.SectionHeading" hint-size="100%,160px"
+    eyebrow="Case studies" title="Same method, different rooms" accent="method"
+    lead="Onboarding, capacity-building, curriculum, community. Find what people actually need to be able to do, then build backwards from that. Each opens into context, approach, deliverables, and outcome.">
+  </x-import>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <sc-for list="{{ filters }}" as="f" hint-placeholder-count="7">
+      <button style="{{ f.style }}" onclick="{{ f.onClick }}">{{ f.label }}</button>
+    </sc-for>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:20px;">
+    <sc-for list="{{ visibleProjects }}" as="p" hint-placeholder-count="4">
+      <div style="border:1px solid var(--border-subtle);border-radius:2px;background:var(--surface-card,#fdfbf4);">
+        <div style="padding:24px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px;">
+          <div>
+            <div style="font-family:Newsreader,serif;font-size:21px;margin-bottom:4px;">{{ p.title }}</div>
+            <div style="font-size:13px;color:var(--text-muted,#6b5f72);">{{ p.scope }}</div>
+          </div>
+          <x-import component-from-global-scope="MoranaDesignSystem_7dc002.RingMark" hint-size="36px,36px" size="{{ 36 }}" rings="{{ 4 }}" completed="{{ p.openCount }}"></x-import>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1px;background:var(--border-subtle);border-top:1px solid var(--border-subtle);">
+          <sc-for list="{{ p.steps }}" as="step" hint-placeholder-count="4">
+            <div style="background:var(--surface-card,#fdfbf4);">
+              <div style="padding:14px 28px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;" onclick="{{ step.onClick }}">
+                <span style="font-size:15px;">{{ step.label }}</span>
+                <span style="font-size:12px;color:var(--olive-600,#6f7c33);">{{ step.indicator }}</span>
+              </div>
+              <sc-if value="{{ step.open }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:0 28px 20px;font-size:15px;line-height:1.6;">{{ step.content }}</div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+</div>
+
+<dc-import name="SiteFooter" hint-size="100%,180px"></dc-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { activeTopic: 'All', open: {} };
+
+  TOPICS = ['Human-centric learning', 'Accessibility-first', 'Behavioural design & gamification', 'Mentoring & coaching', 'AI-era ways of working', 'Community & youth support models'];
+
+  PROJECTS = [
+    {
+      key: 'onboarding', title: 'Onboarding Standard for a Distributed Educator Team',
+      scope: 'Internal educator team / EMEA and LATAM / 1.5 years',
+      tags: ['Mentoring & coaching', 'Human-centric learning'],
+      steps: [
+        { key: 'context', label: 'Context', content: 'A distributed team of educators relied on inconsistent, trainer-dependent onboarding - every new hire\'s ramp depended on who happened to train them.' },
+        { key: 'approach', label: 'Approach', content: 'Designed the programme end to end, facilitated the first cohorts myself, then handed over a self-running package.' },
+        { key: 'deliverables', label: 'Deliverables', content: 'A documented onboarding curriculum, facilitator guides, and a train-the-trainer handover.' },
+        { key: 'outcome', label: 'Outcome', content: 'New educators reached independent delivery faster, and onboarding stopped consuming senior team members\' time.' },
+      ],
+    },
+    {
+      key: 'capacity', title: 'Capacity-Building Strategy for a Distributed Volunteer Network',
+      scope: 'EU civil-society organisation / distributed volunteer network / 6 months (in progress)',
+      tags: ['Community & youth support models', 'Human-centric learning'],
+      steps: [
+        { key: 'context', label: 'Context', content: 'A distributed volunteer network across Board, Communications, HR, Fundraising, Policy, Events, Projects, and Membership teams needed to know where its real capability gaps were.' },
+        { key: 'approach', label: 'Approach', content: 'As L&D Manager, designed a structured needs assessment, ran stakeholder interviews across every team, and confidence-tagged the findings.' },
+        { key: 'deliverables', label: 'Deliverables', content: 'A six-month capacity-building plan and a findings workbook, presented to the Board.' },
+        { key: 'outcome', label: 'Outcome', content: 'The organisation now invests in the gaps it actually has, not the ones it assumed. Impact measures are being defined with the Board now.' },
+      ],
+    },
+    {
+      key: 'curriculum', title: 'A Narrative-Driven B1 English Curriculum for Young Learners',
+      scope: 'Young learners / Ed tech startup / 61 lessons',
+      tags: ['Human-centric learning'],
+      steps: [
+        { key: 'context', label: 'Context', content: 'Young learners needed a B1 English course that would hold their attention across 61 lessons, not just cover the syllabus.' },
+        { key: 'approach', label: 'Approach', content: 'As Project & Content Manager, built a continuous fantasy story arc so learners return for the narrative and absorb the language structure underneath it.' },
+        { key: 'deliverables', label: 'Deliverables', content: 'Lesson blueprints and a full course matrix mapping every lesson to a stated competency.' },
+        { key: 'outcome', label: 'Outcome', content: 'A 61-lesson course where motivation and competency mapping run in parallel, not in tension.' },
+      ],
+    },
+    {
+      key: 'confidence', title: 'Building Confidence and Capability with Young Women',
+      scope: '15 women, ages 20-30 / 6 months / Foundation "Ekaterina Karavelova"',
+      tags: ['Mentoring & coaching', 'Community & youth support models'],
+      steps: [
+        { key: 'context', label: 'Context', content: 'A cohort of 15 women aged 20-30 needed both confidence-building and concrete capability, with support from the Bulgarian Fund for Women and the European Union.' },
+        { key: 'approach', label: 'Approach', content: 'As Trainer, designed and delivered three two-day training intensives, plus ongoing mentoring between them.' },
+        { key: 'deliverables', label: 'Deliverables', content: 'Three training intensives and a structured mentoring cadence across the six-month programme.' },
+        { key: 'outcome', label: 'Outcome', content: 'A cohort that built both confidence and practical capability, not just attended workshops.' },
+      ],
+    },
+  ];
+
+  componentDidMount() {
+    const params = new URLSearchParams(window.location.search);
+    const topic = params.get('topic');
+    if (topic && this.TOPICS.includes(topic)) this.setState({ activeTopic: topic });
+  }
+
+  chipStyle(active) {
+    const base = 'font-family:Archivo,sans-serif;font-size:13px;padding:8px 16px;border-radius:2px;cursor:pointer;background:transparent;';
+    return active
+      ? base + 'border:1px solid var(--olive-600,#6f7c33);background:var(--accent-quiet,rgba(111,124,51,.12));color:var(--olive-600,#6f7c33);'
+      : base + 'border:1px solid var(--border-subtle);color:var(--text-body,#4a3f50);';
+  }
+
+  renderVals() {
+    const s = this.state;
+    const filters = ['All', ...this.TOPICS].map(t => ({
+      label: t, style: this.chipStyle(s.activeTopic === t),
+      onClick: () => this.setState({ activeTopic: t }),
+    }));
+
+    const filtered = s.activeTopic === 'All' ? this.PROJECTS : this.PROJECTS.filter(p => p.tags.includes(s.activeTopic));
+
+    const visibleProjects = filtered.map(p => {
+      const openMap = s.open[p.key] || {};
+      const openCount = Object.values(openMap).filter(Boolean).length;
+      const steps = p.steps.map(st => {
+        const open = !!openMap[st.key];
+        return {
+          ...st, open, indicator: open ? 'Hide' : 'Expand',
+          onClick: () => this.setState({ open: { ...s.open, [p.key]: { ...openMap, [st.key]: !open } } }),
+        };
+      });
+      return { title: p.title, scope: p.scope, steps, openCount };
+    });
+
+    return { filters, visibleProjects };
+  }
+}
+
+</script>
+</body>
+</html>

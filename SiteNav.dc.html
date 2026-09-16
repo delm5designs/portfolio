@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<nav style="display:flex;align-items:center;justify-content:space-between;padding:28px 5vw;border-bottom:1px solid var(--border-subtle);font-family:Archivo,sans-serif;">
+  <a href="Home.dc.html" style="font-family:Newsreader,serif;font-size:15px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-strong,#2a2030);text-decoration:none;">Elena Filipova</a>
+  <div style="display:flex;gap:28px;">
+    <sc-for list="{{ links }}" as="link" hint-placeholder-count="5">
+      <a href="{{ link.href }}" style="{{ link.style }}">{{ link.label }}</a>
+    </sc-for>
+  </div>
+</nav>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const active = this.props.active;
+    const items = [
+      { key: 'home', label: 'Home', href: 'Home.dc.html' },
+      { key: 'projects', label: 'Projects', href: 'Projects.dc.html' },
+      { key: 'tools', label: 'Tools', href: 'Tools.dc.html' },
+      { key: 'credentials', label: 'Credentials', href: 'Credentials.dc.html' },
+      { key: 'sayhi', label: 'Say hi', href: 'Say Hi.dc.html' },
+    ];
+    const links = items.map(i => ({
+      label: i.label, href: i.href,
+      style: `font-size:14px;text-decoration:none;color:${i.key === active ? 'var(--olive-600,#6f7c33)' : 'var(--ink-700,#2a2030)'};`,
+    }));
+    return { links };
+  }
+}
+
+</script>
+</body>
+</html>

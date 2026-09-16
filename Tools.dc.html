@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/shape.css">
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/styles.css">
+  <script src="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/_ds_bundle.js"></script>
+  <style>
+    body { margin: 0; background: var(--surface-page, #fbf7ea); }
+    a { color: var(--olive-600, #6f7c33); text-decoration: none; }
+    a:hover { color: var(--plum-500, #56466b); }
+  </style>
+</helmet>
+
+<dc-import name="SiteNav" active="tools" hint-size="100%,80px"></dc-import>
+
+<div style="max-width:1140px;margin:0 auto;padding:64px 5vw 120px;display:flex;flex-direction:column;gap:96px;font-family:Archivo,sans-serif;">
+
+  <x-import component-from-global-scope="MoranaDesignSystem_7dc002.SectionHeading" hint-size="100%,160px"
+    eyebrow="Tools" title="I'd rather show the science working than tell you it does"
+    lead="Three small tools, each built on a real piece of learning science. Run them - each one measures something about how you learn, rather than just explaining the theory.">
+  </x-import>
+
+  <!-- TOOL 1: KNOWLEDGE CALIBRATION -->
+  <div style="display:flex;flex-direction:column;gap:24px;">
+    <div>
+      <div style="font-family:Newsreader,serif;font-size:26px;font-weight:500;margin-bottom:8px;">Knowledge Calibration Test</div>
+      <p style="margin:0;font-size:15px;line-height:1.6;max-width:64ch;color:var(--text-body,#4a3f50);">Most people can't tell the difference between "I recognise this" and "I can actually produce this from memory" - and that gap is what tanks performance under pressure.</p>
+    </div>
+    <div style="border:1px solid var(--border-subtle);border-radius:2px;padding:32px;max-width:640px;background:var(--surface-card,#fdfbf4);display:flex;flex-direction:column;gap:20px;">
+
+      <sc-if value="{{ calStepIs0 }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <p style="margin:0;font-size:16px;line-height:1.5;">Before reading anything - guess: does testing yourself on new material <em>before</em> you've studied it help you learn it better than studying it first?</p>
+          <div style="display:flex;gap:10px;">
+            <button style="{{ predictYesStyle }}" onclick="{{ pickYes }}">Yes, it helps</button>
+            <button style="{{ predictNoStyle }}" onclick="{{ pickNo }}">No, it doesn't</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ calStepIs1 }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <p style="margin:0;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:var(--olive-600,#6f7c33);">Read this</p>
+          <p style="margin:0;font-size:16px;line-height:1.6;">Guessing wrong before you're told the answer forces a memory search that primes you to notice and retain the correct answer when it arrives - a "pretesting effect." It works even when your guess is wrong, as long as you actually attempt one.</p>
+          <div><button style="{{ continueStyle }}" onclick="{{ goToConfidence }}">Continue</button></div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ calStepIs2 }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <p style="margin:0;font-size:16px;line-height:1.5;">Now - how confident are you that you could explain the pretesting effect to someone else, from memory, right now?</p>
+          <div style="display:flex;gap:8px;">
+            <sc-for list="{{ confidenceOptions }}" as="opt" hint-placeholder-count="5">
+              <button style="{{ opt.style }}" onclick="{{ opt.onClick }}">{{ opt.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ calStepIs3 }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <p style="margin:0;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:var(--olive-600,#6f7c33);">Your gap</p>
+          <p style="margin:0;font-size:16px;line-height:1.6;">{{ gapMessage }}</p>
+          <div><button style="{{ resetStyle }}" onclick="{{ resetCal }}">Run it again</button></div>
+        </div>
+      </sc-if>
+
+    </div>
+    <a href="https://delm5designs.github.io/Calibration_Test/" target="_blank" rel="noopener" style="font-size:13px;color:var(--text-accent,#6f7c33);">Open the full tool &rarr;</a>
+    <x-import component-from-global-scope="MoranaDesignSystem_7dc002.ResearchCallout" hint-size="100%,140px"
+      finding="Guessing wrong before being told the answer still improves later recall, as long as an attempt is made."
+      citation="Kornell, Hays &amp; Bjork, 2009" style="{{ sageCalloutStyle }}">
+    </x-import>
+  </div>
+
+  <!-- TOOL 2: STUDY STRATEGY CHECK -->
+  <div style="display:flex;flex-direction:column;gap:24px;">
+    <div>
+      <div style="font-family:Newsreader,serif;font-size:26px;font-weight:500;margin-bottom:8px;">Study Strategy Check</div>
+      <p style="margin:0;font-size:15px;line-height:1.6;max-width:64ch;">Almost nobody studies the way the evidence says works, and almost everybody feels confident anyway. Tick what you actually do.</p>
+    </div>
+    <div style="border:1px solid var(--border-subtle);border-radius:2px;padding:32px;max-width:720px;background:var(--surface-card,#fdfbf4);display:flex;flex-direction:column;gap:16px;">
+
+      <sc-if value="{{ studyNotSubmitted }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:1px;background:var(--border-subtle);border:1px solid var(--border-subtle);">
+          <sc-for list="{{ studyHabits }}" as="h" hint-placeholder-count="8">
+            <div style="background:var(--surface-card,#fdfbf4);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;gap:16px;cursor:pointer;" onclick="{{ h.toggle }}">
+              <span style="font-size:15px;">{{ h.label }}</span>
+              <span style="{{ h.checkStyle }}">{{ h.checkLabel }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div><button style="{{ continueStyle }}" onclick="{{ submitStudy }}">See what the evidence says</button></div>
+      </sc-if>
+
+      <sc-if value="{{ studySubmitted }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:1px;background:var(--border-subtle);border:1px solid var(--border-subtle);">
+          <sc-for list="{{ studyResults }}" as="r" hint-placeholder-count="8">
+            <div style="background:var(--surface-card,#fdfbf4);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;gap:16px;">
+              <span style="font-size:15px;">{{ r.label }}</span>
+              <span style="{{ r.evidenceStyle }}">{{ r.evidenceLabel }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <p style="margin:0;font-size:15px;line-height:1.6;">{{ studySummary }}</p>
+        <div><button style="{{ resetStyle }}" onclick="{{ resetStudy }}">Check again</button></div>
+      </sc-if>
+
+    </div>
+    <a href="https://delm5designs.github.io/study_strategy_check/" target="_blank" rel="noopener" style="font-size:13px;color:var(--text-accent,#6f7c33);">Open the full tool &rarr;</a>
+    <x-import component-from-global-scope="MoranaDesignSystem_7dc002.ResearchCallout" hint-size="100%,140px"
+      finding="Re-reading and highlighting feel productive but produce almost no measurable gain in retention."
+      citation="Dunlosky et al., 2013" inverse="{{ true }}">
+    </x-import>
+  </div>
+
+  <!-- TOOL 3: L&D EXPERTISE TRAINER -->
+  <div style="display:flex;flex-direction:column;gap:24px;">
+    <div>
+      <div style="font-family:Newsreader,serif;font-size:26px;font-weight:500;margin-bottom:8px;">L&amp;D Expertise Trainer</div>
+      <p style="margin:0;font-size:15px;line-height:1.6;max-width:64ch;">A spaced-repetition glossary covering the whole pipeline of how people learn. Rate your confidence before every reveal - that's the calibration check built into the full trainer.</p>
+    </div>
+    <div style="border:1px solid var(--border-subtle);border-radius:2px;padding:32px;max-width:640px;background:var(--surface-card,#fdfbf4);display:flex;flex-direction:column;gap:20px;">
+      <div style="font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--olive-600,#6f7c33);">{{ cardPosition }}</div>
+      <div style="font-family:Newsreader,serif;font-size:26px;">{{ currentTerm.term }}</div>
+
+      <sc-if value="{{ trainerAwaitingConfidence }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <p style="margin:0;font-size:15px;">How confident are you that you could define this from memory?</p>
+          <div style="display:flex;gap:8px;">
+            <sc-for list="{{ trainerConfidenceOptions }}" as="opt" hint-placeholder-count="5">
+              <button style="{{ opt.style }}" onclick="{{ opt.onClick }}">{{ opt.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ trainerRevealed }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <p style="margin:0;font-size:16px;line-height:1.6;">{{ currentTerm.def }}</p>
+          <div><button style="{{ continueStyle }}" onclick="{{ nextTerm }}">Next term</button></div>
+        </div>
+      </sc-if>
+    </div>
+    <a href="https://delm5designs.github.io/lnd-glossary/" target="_blank" rel="noopener" style="font-size:13px;color:var(--text-accent,#6f7c33);">Open the full tool &rarr;</a>
+    <x-import component-from-global-scope="MoranaDesignSystem_7dc002.ResearchCallout" hint-size="100%,140px"
+      finding="People are reliably worse at predicting what they'll remember than at remembering it - confidence and accuracy diverge."
+      citation="Dunning &amp; Kruger, 1999" style="{{ plumCalloutStyle }}">
+    </x-import>
+  </div>
+
+</div>
+
+<dc-import name="SiteFooter" hint-size="100%,180px"></dc-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    calStep: 0, calPrediction: null, calConfidence: null,
+    studyChecks: {}, studySubmittedFlag: false,
+    trainerIndex: 0, trainerConfidence: null, trainerPhase: 'confidence',
+  };
+
+  STUDY_HABITS = [
+    { key: 'reread', label: 'Re-reading notes multiple times', evidence: 'weak' },
+    { key: 'highlight', label: 'Highlighting or underlining while reading', evidence: 'weak' },
+    { key: 'selftest', label: 'Testing yourself instead of re-reading', evidence: 'strong' },
+    { key: 'spacing', label: 'Spacing study sessions over several days', evidence: 'strong' },
+    { key: 'prequestion', label: 'Answering practice questions before studying the material', evidence: 'strong' },
+    { key: 'interleave', label: 'Mixing different topics in one session', evidence: 'strong' },
+    { key: 'cram', label: 'Cramming close to the deadline', evidence: 'weak' },
+    { key: 'learningstyle', label: 'Studying to match a "learning style" (visual/auditory)', evidence: 'weak' },
+  ];
+
+  TERMS = [
+    { term: 'Retrieval practice', def: 'Actively recalling information from memory - e.g. self-testing - rather than re-exposing yourself to it. One of the most reliable ways to make learning stick.' },
+    { term: 'Spacing effect', def: 'Information is retained better when study sessions are spread out over time rather than crammed together, even if total study time is the same.' },
+    { term: 'Desirable difficulty', def: 'A learning condition that feels harder in the moment - like spacing or self-testing - but produces stronger long-term retention than an easier-feeling alternative.' },
+    { term: 'Interleaving', def: 'Mixing several related topics or skills within one study session instead of blocking them - forces the brain to keep discriminating between them, which strengthens learning.' },
+    { term: 'Metacognition', def: 'Awareness and regulation of your own thinking and learning - knowing what you actually know, versus what you only recognise.' },
+  ];
+
+  chipStyle(active) {
+    const base = 'font-family:Archivo,sans-serif;font-size:13px;padding:8px 16px;border-radius:2px;cursor:pointer;background:transparent;';
+    return active
+      ? base + 'border:1px solid var(--olive-600,#6f7c33);background:var(--accent-quiet,rgba(111,124,51,.12));color:var(--olive-600,#6f7c33);'
+      : base + 'border:1px solid var(--border-subtle);color:var(--text-body,#4a3f50);';
+  }
+
+  renderVals() {
+    const s = this.state;
+
+    // Tool 1
+    const predictBtn = (val) => this.chipStyle(s.calPrediction === val).replace('padding:8px 16px', 'padding:10px 18px');
+    const continueStyle = 'font-family:Archivo,sans-serif;font-size:13px;padding:10px 18px;border-radius:2px;border:none;background:var(--olive-600,#6f7c33);color:var(--surface-card,#fdfbf4);cursor:pointer;';
+    const resetStyle = continueStyle;
+    const confidenceOptions = [1, 2, 3, 4, 5].map(n => ({
+      label: String(n), style: this.chipStyle(s.calConfidence === n).replace('padding:8px 16px', 'padding:8px 14px'),
+      onClick: () => this.setState({ calConfidence: n, calStep: 3 }),
+    }));
+    let gapMessage = '';
+    if (s.calStep === 3) {
+      gapMessage = s.calPrediction === true
+        ? `You predicted correctly - and rated your confidence ${s.calConfidence}/5. That's the pretesting effect working on you, in real time.`
+        : `You predicted the opposite of what's true, and rated your confidence ${s.calConfidence}/5. That mismatch is exactly the gap this tool is built to surface.`;
+    }
+
+    // Tool 2
+    const studyHabits = this.STUDY_HABITS.map(h => {
+      const checked = !!s.studyChecks[h.key];
+      return {
+        label: h.label, checkLabel: checked ? 'I do this' : 'I don\'t',
+        checkStyle: `font-size:12px;color:${checked ? 'var(--olive-600,#6f7c33)' : 'var(--text-muted,#6b5f72)'};`,
+        toggle: () => this.setState({ studyChecks: { ...s.studyChecks, [h.key]: !checked } }),
+      };
+    });
+    const evidenceLabelMap = { strong: 'Strong evidence', weak: 'Works against you', neutral: 'Neutral' };
+    const evidenceColorMap = { strong: 'var(--state-positive,#4e7a55)', weak: 'var(--state-caution,#a8722a)', neutral: 'var(--text-muted,#6b5f72)' };
+    const studyResults = this.STUDY_HABITS.map(h => {
+      const checked = !!s.studyChecks[h.key];
+      return {
+        label: h.label + (checked ? ' - you do this' : ''),
+        evidenceLabel: evidenceLabelMap[h.evidence],
+        evidenceStyle: `font-size:12px;color:${evidenceColorMap[h.evidence]};`,
+      };
+    });
+    const strongChecked = this.STUDY_HABITS.filter(h => h.evidence === 'strong' && s.studyChecks[h.key]).length;
+    const weakChecked = this.STUDY_HABITS.filter(h => h.evidence === 'weak' && s.studyChecks[h.key]).length;
+    const studySummary = `You're using ${strongChecked} of ${this.STUDY_HABITS.filter(h => h.evidence === 'strong').length} evidence-backed habits, and ${weakChecked} habit${weakChecked === 1 ? '' : 's'} that work${weakChecked === 1 ? 's' : ''} against you.`;
+
+    // Tool 3
+    const currentTerm = this.TERMS[s.trainerIndex];
+    const trainerConfidenceOptions = [1, 2, 3, 4, 5].map(n => ({
+      label: String(n), style: this.chipStyle(s.trainerConfidence === n).replace('padding:8px 16px', 'padding:8px 14px'),
+      onClick: () => this.setState({ trainerConfidence: n, trainerPhase: 'revealed' }),
+    }));
+
+    const sageCalloutStyle = { background: 'rgba(78,122,85,.12)', boxShadow: 'inset 0 0 0 1px rgba(78,122,85,.3)' };
+    const plumCalloutStyle = { background: 'rgba(86,70,107,.1)', boxShadow: 'inset 0 0 0 1px rgba(86,70,107,.28)' };
+
+    return {
+      sageCalloutStyle, plumCalloutStyle,
+      calStepIs0: s.calStep === 0, calStepIs1: s.calStep === 1, calStepIs2: s.calStep === 2, calStepIs3: s.calStep === 3,
+      predictYesStyle: predictBtn(true), predictNoStyle: predictBtn(false),
+      pickYes: () => this.setState({ calPrediction: true, calStep: 1 }),
+      pickNo: () => this.setState({ calPrediction: false, calStep: 1 }),
+      continueStyle, goToConfidence: () => this.setState({ calStep: 2 }),
+      confidenceOptions, gapMessage, resetStyle,
+      resetCal: () => this.setState({ calStep: 0, calPrediction: null, calConfidence: null }),
+
+      studyHabits, studyResults, studySummary,
+      studyNotSubmitted: !s.studySubmittedFlag, studySubmitted: s.studySubmittedFlag,
+      submitStudy: () => this.setState({ studySubmittedFlag: true }),
+      resetStudy: () => this.setState({ studySubmittedFlag: false, studyChecks: {} }),
+
+      currentTerm, cardPosition: `Term ${s.trainerIndex + 1} of ${this.TERMS.length}`,
+      trainerAwaitingConfidence: s.trainerPhase === 'confidence', trainerRevealed: s.trainerPhase === 'revealed',
+      trainerConfidenceOptions,
+      nextTerm: () => this.setState({ trainerIndex: (s.trainerIndex + 1) % this.TERMS.length, trainerConfidence: null, trainerPhase: 'confidence' }),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+/* Morana webfonts - Newsreader (display serif) + Archivo (sans).
+   SUBSTITUTION: no licensed font files were supplied, so both are Google Fonts,
+   loaded with latin + latin-ext + cyrillic subsets (the site ships EN and BG).
+   If Morana licenses different faces, replace this import with @font-face rules
+   and drop the binaries in assets/fonts/. */
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Archivo:wght@400;500;600&display=swap&subset=latin,latin-ext,cyrillic");

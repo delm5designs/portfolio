@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/shape.css">
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/styles.css">
+  <script src="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/_ds_bundle.js"></script>
+  <style>
+    body { margin: 0; background: var(--surface-page, #fbf7ea); }
+    a { color: var(--olive-600, #6f7c33); text-decoration: none; }
+    a:hover { color: var(--plum-500, #56466b); }
+    @keyframes riseFade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes ringSpin { to { transform: rotate(360deg); } }
+    @keyframes ringSpinRev { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+    @keyframes ringPulse { 0% { transform: scale(.3); opacity: 0; } 12% { opacity: .7; } 100% { transform: scale(1.05); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .ring-field * { animation: none !important; } }
+  </style>
+</helmet>
+
+<dc-import name="SiteNav" active="home" hint-size="100%,80px"></dc-import>
+
+<!-- HERO -->
+<div style="position:relative;overflow:hidden;min-height:460px;display:flex;align-items:center;padding:80px 5vw;background:var(--surface-page,#fbf7ea);">
+  <sc-if value="{{ showRingField }}" hint-placeholder-val="{{ true }}">
+  <div class="ring-field" style="position:absolute;top:50%;right:6vmin;transform:translateY(-50%);width:42vmin;max-width:480px;min-width:300px;aspect-ratio:1;pointer-events:none;">
+    <div style="position:absolute;inset:0;margin:auto;width:28%;height:28%;border-radius:50%;border:2px solid var(--sage-500,#4e7a55);animation:ringSpin 16s linear infinite;transform-origin:center;"><span style="position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:9px;height:9px;border-radius:50%;background:var(--sage-500,#4e7a55);"></span></div>
+    <div style="position:absolute;inset:0;margin:auto;width:54%;height:54%;border-radius:50%;border:2px solid var(--olive-600,#6f7c33);animation:ringSpinRev 26s linear infinite;transform-origin:center;"><span style="position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:9px;height:9px;border-radius:50%;background:var(--olive-600,#6f7c33);"></span></div>
+    <div style="position:absolute;inset:0;margin:auto;width:78%;height:78%;border-radius:50%;border:2px solid var(--plum-500,#56466b);opacity:.85;animation:ringSpin 40s linear infinite;transform-origin:center;"><span style="position:absolute;top:-5px;left:50%;transform:translateX(-50%);width:7px;height:7px;border-radius:50%;background:var(--plum-500,#56466b);"></span></div>
+    <div style="position:absolute;inset:0;margin:auto;width:100%;height:100%;border-radius:50%;border:1.5px solid var(--border-strong,rgba(42,32,48,.32));animation:ringSpinRev 58s linear infinite;transform-origin:center;"></div>
+    <div style="position:absolute;inset:0;margin:auto;width:100%;height:100%;border-radius:50%;border:2px solid var(--olive-600,#6f7c33);opacity:0;animation:ringPulse 7s cubic-bezier(.22,.7,.3,1) infinite;transform-origin:center;"></div>
+  </div>
+  </sc-if>
+  <div style="position:relative;z-index:2;max-width:500px;display:flex;flex-direction:column;gap:20px;text-align:left;animation:riseFade 1.1s cubic-bezier(.2,.8,.2,1) both;">
+    <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:{{ heroAccentColor }};">L&amp;D · Psychology</div>
+    <h1 style="font-family:Newsreader,serif;font-weight:400;font-size:48px;line-height:1.05;letter-spacing:-0.024em;margin:0;color:var(--text-strong,#2a2030);">{{ heroHeadline }}</h1>
+    <p style="font-family:Archivo,sans-serif;font-size:17px;line-height:1.6;max-width:42ch;margin:0;color:var(--text-body,#4a3f50);">I create learning design for teams, career strategy for individuals - built on learning science, not guesswork.<br><br>I'm an L&amp;D professional with a psychology foundation, designing accessible, behaviour-aware learning that helps people grow and teams perform.</p>
+    <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;">
+      <a href="{{ ctaPrimaryHref }}" style="padding:13px 24px;border-radius:2px;background:var(--surface-inverse,#2a2030);color:var(--text-on-dark,#efe3a9);font-size:14.5px;font-weight:500;transition:background .2s ease;">{{ ctaPrimaryLabel }}</a>
+      <a href="Say Hi.dc.html" style="padding:13px 24px;border-radius:2px;border:1px solid var(--border-strong,rgba(42,32,48,.32));color:var(--text-strong,#2a2030);font-size:14.5px;font-weight:500;">Say hi</a>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:1140px;margin:0 auto;padding:0 5vw 120px;display:flex;flex-direction:column;gap:96px;font-family:Archivo,sans-serif;">
+
+  <!-- OBSESSIONS AS DOORWAYS -->
+  <div style="display:flex;flex-direction:column;gap:28px;">
+    
+    <x-import component-from-global-scope="MoranaDesignSystem_7dc002.SectionHeading" hint-size="100%,120px" eyebrow="Pick a thread" title="What I'm currently passionate about:" lead="Click through the topics and explore the Projects or Credentials connected to that thread.">
+    </x-import><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--border-subtle);border:1px solid var(--border-subtle);">
+      <sc-for list="{{ obsessions }}" as="ob" hint-placeholder-count="6">
+        <div style="background:var(--surface-card,#fdfbf4);padding:24px;display:flex;flex-direction:column;gap:10px;">
+          <div style="font-family:Newsreader,serif;font-size:18px;">{{ ob.title }}</div>
+          <p style="margin:0;font-size:14.5px;line-height:1.55;color:var(--text-body,#4a3f50);">{{ ob.desc }}</p>
+          <div style="display:flex;gap:16px;margin-top:6px;">
+            <sc-for list="{{ ob.links }}" as="lk" hint-placeholder-count="2">
+              <a href="{{ lk.href }}" style="font-size:13px;">{{ lk.label }}</a>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- HOW I WORK - STEPPER -->
+  <div style="display:flex;flex-direction:column;gap:28px;">
+    <x-import component-from-global-scope="MoranaDesignSystem_7dc002.SectionHeading" hint-size="100%,100px" eyebrow="Method" title="How I work" mark="true">
+    </x-import>
+    <div style="display:flex;gap:32px;flex-wrap:wrap;">
+      <div style="display:flex;flex-direction:column;gap:1px;min-width:220px;flex:0 0 auto;">
+        <sc-for list="{{ workSteps }}" as="step" hint-placeholder-count="4">
+          <div style="padding:16px 0;cursor:pointer;border-bottom:1px solid var(--border-subtle);display:flex;align-items:baseline;gap:12px;" onclick="{{ step.onClick }}">
+            <span style="font-family:Archivo,sans-serif;font-size:12px;color:var(--olive-600,#6f7c33);">{{ step.number }}</span>
+            <span style="{{ step.labelStyle }}">{{ step.label }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="flex:1;min-width:260px;border:1px solid var(--border-subtle);border-radius:2px;padding:28px;background:var(--surface-card,#fdfbf4);display:flex;flex-direction:column;gap:16px;">
+        <x-import component-from-global-scope="MoranaDesignSystem_7dc002.RingMark" hint-size="44px,44px" size="{{ 44 }}" rings="{{ 4 }}" completed="{{ activeStepNumber }}"></x-import>
+        <p style="margin:0;font-size:16px;line-height:1.6;">{{ activeStepDetail }}</p>
+        <p style="margin:0;font-size:15px;line-height:1.6;color:var(--text-muted,#6b5f72);">{{ activeStepDetailExtra }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORK WITH ME -->
+  <div style="display:flex;flex-direction:column;gap:28px;">
+    <x-import component-from-global-scope="MoranaDesignSystem_7dc002.SectionHeading" hint-size="100%,120px" eyebrow="Work with me" title="If you're building learning that has to actually" accent="work" lead="I work both B2B (teams &amp; organizations) and B2C (individuals). If you're an individual looking for 1:1 consulting, I can help you clarify the problem, design a plan, and build practical tools you can use immediately.">
+    </x-import>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
+      <sc-for list="{{ workOfferings }}" as="card" hint-placeholder-count="4">
+        <div style="background:var(--surface-card,#fdfbf4);border:1px solid var(--border-subtle);border-radius:2px;padding:28px;display:flex;flex-direction:column;gap:14px;">
+          <x-import component-from-global-scope="MoranaDesignSystem_7dc002.Badge" hint-size="auto,22px" tone="{{ card.track }}">{{ card.trackLabel }}</x-import>
+          <div style="font-family:Newsreader,serif;font-size:19px;">{{ card.name }}</div>
+          <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14.5px;line-height:1.5;color:var(--text-body,#4a3f50);">
+            <sc-for list="{{ card.items }}" as="it" hint-placeholder-count="4">
+              <li>{{ it }}</li>
+            </sc-for>
+          </ul>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- CONTACT TEASER -->
+  <div style="border:1px solid var(--border-subtle);border-radius:2px;padding:40px;display:flex;flex-direction:column;gap:16px;align-items:flex-start;">
+    <div style="font-family:Newsreader,serif;font-size:24px;">Building learning that has to actually work?</div>
+    <x-import component-from-global-scope="MoranaDesignSystem_7dc002.Button" hint-size="auto,44px" href="Say Hi.dc.html">Say hi</x-import>
+  </div>
+
+</div>
+
+<dc-import name="SiteFooter" hint-size="100%,180px"></dc-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;heroHeadline&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Hi, I'm Elena!&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Hero&quot;},
+  &quot;ctaPrimaryLabel&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Try the tools&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Hero&quot;},
+  &quot;ctaPrimaryHref&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Tools.dc.html&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Hero&quot;},
+  &quot;showRingField&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Hero&quot;},
+  &quot;heroAccentColor&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#56466b&quot;, &quot;options&quot;: [&quot;#56466b&quot;, &quot;#4e7a55&quot;, &quot;#6f7c33&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Hero&quot;},
+  &quot;defaultWorkStep&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 0, &quot;min&quot;: 0, &quot;max&quot;: 3, &quot;step&quot;: 1, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;How I work&quot;}
+}">
+class Component extends DCLogic {
+  state = { activeStep: this.props.defaultWorkStep ?? 0 };
+
+  OBSESSIONS = [
+    { title: 'Metalearning', desc: 'I teach people how to learn - faster, and in a way that sticks - always in service of a real goal, never taught as an abstract skill.', links: [{ label: 'See it in action', href: 'Projects.dc.html?topic=Metalearning' }] },
+    { title: 'Curriculum & instructional design', desc: 'Structured learning that gets built once and holds up - onboarding, courses, audits.', links: [{ label: 'Credential', href: 'Credentials.dc.html?topic=Curriculum' }] },
+    { title: 'Human-centric learning', desc: 'I design for real people in real contexts - not "perfect learners."', topic: 'Human-centric learning' },
+    { title: 'Accessibility-first', desc: 'Clarity, inclusive formats, and fewer hidden barriers.', topic: 'Accessibility-first' },
+    { title: 'Behavioural design & gamification', desc: 'Motivation isn\'t a mystery - design can support it (Octalysis).', topic: 'Behavioural design & gamification' },
+    { title: 'Mentoring & coaching', desc: 'I love building growth environments, not just content.', topic: 'Mentoring & coaching' },
+    { title: 'AI-era ways of working', desc: 'Helping teams use AI for learning thoughtfully, not chaotically.', topic: 'AI-era ways of working' },
+    { title: 'Community & youth support models', desc: 'Services that feel like a "one-stop shop" for people.', topic: 'Community & youth support models' },
+  ];
+
+  WORK_STEPS = [
+    { number: '01', label: 'Clarify', detail: 'Clarify the real problem, and what success looks like - before designing anything.', extra: 'That usually means asking why the current approach isn\'t working before proposing a new one.' },
+    { number: '02', label: 'Design for humans', detail: 'Motivation, accessibility, context, constraints - the programme is built around the people in it, not a template.', extra: 'I\'d rather ship something smaller that fits the room than something impressive that doesn\'t.' },
+    { number: '03', label: 'Build small + test', detail: 'Pilot, iterate, then scale. Nothing goes wide before it has been tried on real people.', extra: 'Early feedback is cheap; a wrong assumption at full scale is not.' },
+    { number: '04', label: 'Leave a trail', detail: 'Artefacts, toolkits, and a clear handover, so the work keeps running without me in the room.', extra: 'The goal is capability that outlasts the engagement, not dependence on me.' },
+  ];
+
+  WORK_OFFERINGS = [
+    { track: 'company', trackLabel: 'Company', name: 'Learning program design', items: ['Needs analysis', 'Curriculum & content design', 'Facilitator enablement', 'Evaluation & iteration', 'Accessibility-first by default'] },
+    { track: 'company', trackLabel: 'Company', name: 'Workshops & facilitation', items: ['Live or async workshops', 'Psychological safety practices', 'Hands-on activities & toolkits', 'Coaching-informed approach', 'Stakeholder-friendly outcomes'] },
+    { track: 'individual', trackLabel: 'Individual', name: 'Learning consulting (1:1)', items: ['Learning strategy & "how to learn" plan', 'Study systems, routines, and accountability', 'Reflection + iteration (so it actually sticks)'] },
+    { track: 'individual', trackLabel: 'Individual', name: 'Learning How to Learn (programs)', items: ['Group program (cohort-based)', 'Individual program (1:1)'] },
+  ];
+
+  renderVals() {
+    const obsessions = this.OBSESSIONS.map(o => ({
+      title: o.title, desc: o.desc,
+      links: o.links || [
+        { label: 'See it in Projects', href: `Projects.dc.html?topic=${encodeURIComponent(o.topic)}` },
+        { label: 'Credential', href: `Credentials.dc.html?topic=${encodeURIComponent(o.topic)}` },
+      ],
+    }));
+
+    const active = this.state.activeStep;
+    const workSteps = this.WORK_STEPS.map((s, i) => ({
+      number: s.number, label: s.label,
+      labelStyle: `font-family:Newsreader,serif;font-size:17px;color:${i === active ? 'var(--olive-600,#6f7c33)' : 'inherit'};`,
+      onClick: () => this.setState({ activeStep: i }),
+    }));
+
+    return {
+      obsessions, workSteps,
+      activeStepNumber: active + 1,
+      activeStepDetail: this.WORK_STEPS[active].detail,
+      activeStepDetailExtra: this.WORK_STEPS[active].extra,
+      workOfferings: this.WORK_OFFERINGS,
+      heroHeadline: this.props.heroHeadline ?? "Hi, I'm Elena!",
+      ctaPrimaryLabel: this.props.ctaPrimaryLabel ?? 'Try the tools',
+      ctaPrimaryHref: this.props.ctaPrimaryHref ?? 'Tools.dc.html',
+      showRingField: this.props.showRingField ?? true,
+      heroAccentColor: this.props.heroAccentColor ?? '#56466b',
+    };
+  }
+}
+
+</script>
+</body>
+</html>
