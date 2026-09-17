@@ -35,12 +35,16 @@
   <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;">
 
     <div style="display:flex;flex-direction:column;gap:24px;">
-      <div style="border:1px solid var(--border-subtle);border-radius:2px;padding:28px;display:flex;flex-direction:column;gap:12px;">
-        <div style="font-family:Newsreader,serif;font-size:19px;">Reach out directly</div>
-        <a href="mailto:its.elena.filipova@gmail.com" style="font-size:15px;">its.elena.filipova@gmail.com</a>
-        <a href="https://www.linkedin.com/in/elenafilip0va/" style="font-size:15px;">linkedin.com/in/elenafilip0va</a>
+      <div style="border:1px solid var(--border-subtle);border-radius:2px;padding:32px;display:flex;flex-direction:column;gap:14px;background:var(--surface-card,#fdfbf4);">
+        <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--olive-600,#6f7c33);">Get in touch</div>
+        <div style="font-family:Newsreader,serif;font-size:23px;line-height:1.25;color:var(--text-strong,#2a2030);">Email is the best way to reach me.</div>
+        <p style="margin:0;font-size:15px;line-height:1.65;color:var(--text-body,#4a3f50);">Tell me a little about what you are working on - a sentence or two is plenty. I reply within two working days.</p>
+        <a href="mailto:its.elena.filipova@gmail.com" style="align-self:flex-start;margin-top:6px;padding:13px 24px;border-radius:2px;background:var(--surface-inverse,#2a2030);color:var(--text-on-dark,#efe3a9);font-size:14.5px;font-weight:500;">its.elena.filipova@gmail.com</a>
+        <a href="https://www.linkedin.com/in/elenafilip0va/" style="font-size:15px;margin-top:2px;">linkedin.com/in/elenafilip0va</a>
       </div>
+    </div>
 
+    <div style="display:flex;flex-direction:column;gap:24px;">
       <div style="border:1px solid var(--border-subtle);border-radius:2px;padding:28px;display:flex;flex-direction:column;gap:12px;">
         <div style="font-family:Newsreader,serif;font-size:19px;">Off the clock</div>
         <p style="margin:0;font-size:15px;line-height:1.65;">I read exactly two genres and nothing in between: fantasy novels with dragons and morally grey magic systems, or research papers and life-science books. My husband and I have spent measurable hours debating fictional worldbuilding as if it were a job.</p>
@@ -52,10 +56,6 @@
       </div>
     </div>
 
-    <div>
-      <x-import component-from-global-scope="MoranaDesignSystem_7dc002.ContactForm" hint-size="100%,480px" email="its.elena.filipova@gmail.com" onSubmit="{{ handleContactSubmit }}"></x-import>
-    </div>
-
   </div>
 
 </div>
@@ -63,21 +63,5 @@
 <dc-import name="SiteFooter" hint-size="100%,180px"></dc-import>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script>
-class Component extends DCLogic {
-  renderVals() {
-    return {
-      handleContactSubmit: (values) => {
-        const subject = encodeURIComponent('Getting in touch - ' + (values.name || 'portfolio contact'));
-        const body = encodeURIComponent(
-          'Name: ' + (values.name || '') + '\nEmail: ' + (values.email || '') + '\nCompany: ' + (values.org || '-') + '\n\n' + (values.goal || '')
-        );
-        window.location.href = 'mailto:its.elena.filipova@gmail.com?subject=' + subject + '&body=' + body;
-      },
-    };
-  }
-}
-
-</script>
 </body>
 </html>
