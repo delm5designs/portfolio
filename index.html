@@ -25,6 +25,9 @@
     @keyframes ringSpinRev { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
     @keyframes ringPulse { 0% { transform: scale(.3); opacity: 0; } 12% { opacity: .7; } 100% { transform: scale(1.05); opacity: 0; } }
     @media (prefers-reduced-motion: reduce) { .ring-field * { animation: none !important; } }
+    /* On phones the ring field is wider than the column and sits behind the
+       hero copy, which makes the headline and paragraph hard to read. */
+    @media (max-width: 720px) { .ring-field { display: none; } }
   </style>
 </helmet>
 
@@ -78,7 +81,7 @@
     <x-import component-from-global-scope="MoranaDesignSystem_7dc002.SectionHeading" hint-size="100%,100px" eyebrow="Method" title="How I work" mark="true">
     </x-import>
     <div style="display:flex;gap:32px;flex-wrap:wrap;">
-      <div style="display:flex;flex-direction:column;gap:1px;min-width:220px;flex:0 0 auto;">
+      <div style="display:flex;flex-direction:column;gap:1px;box-sizing:border-box;min-width:min(100%,220px);flex:0 0 auto;">
         <sc-for list="{{ workSteps }}" as="step" hint-placeholder-count="4">
           <div style="padding:16px 0;cursor:pointer;border-bottom:1px solid var(--border-subtle);display:flex;align-items:baseline;gap:12px;" onclick="{{ step.onClick }}">
             <span style="font-family:Archivo,sans-serif;font-size:12px;color:var(--olive-600,#6f7c33);">{{ step.number }}</span>
@@ -86,7 +89,7 @@
           </div>
         </sc-for>
       </div>
-      <div style="flex:1;min-width:260px;border:1px solid var(--border-subtle);border-radius:2px;padding:28px;background:var(--surface-card,#fdfbf4);display:flex;flex-direction:column;gap:16px;">
+      <div style="flex:1;box-sizing:border-box;min-width:min(100%,260px);border:1px solid var(--border-subtle);border-radius:2px;padding:28px;background:var(--surface-card,#fdfbf4);display:flex;flex-direction:column;gap:16px;">
         <x-import component-from-global-scope="MoranaDesignSystem_7dc002.RingMark" hint-size="44px,44px" size="{{ 44 }}" rings="{{ 4 }}" completed="{{ activeStepNumber }}"></x-import>
         <p style="margin:0;font-size:16px;line-height:1.6;">{{ activeStepDetail }}</p>
         <p style="margin:0;font-size:15px;line-height:1.6;color:var(--text-muted,#6b5f72);">{{ activeStepDetailExtra }}</p>

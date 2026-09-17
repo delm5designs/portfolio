@@ -7,9 +7,9 @@
 </head>
 <body>
 <x-dc>
-<nav style="display:flex;align-items:center;justify-content:space-between;padding:28px 5vw;border-bottom:1px solid var(--border-subtle);font-family:Archivo,sans-serif;">
-  <a href="index.html" style="font-family:Newsreader,serif;font-size:15px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-strong,#2a2030);text-decoration:none;">Elena Filipova</a>
-  <div style="display:flex;gap:28px;">
+<nav style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px 24px;padding:24px 5vw;border-bottom:1px solid var(--border-subtle);font-family:Archivo,sans-serif;">
+  <a href="index.html" style="font-family:Newsreader,serif;font-size:15px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-strong,#2a2030);text-decoration:none;white-space:nowrap;">Elena Filipova</a>
+  <div style="display:flex;flex-wrap:wrap;gap:10px 20px;">
     <sc-for list="{{ links }}" as="link" hint-placeholder-count="5">
       <a href="{{ link.href }}" style="{{ link.style }}">{{ link.label }}</a>
     </sc-for>
