@@ -20,6 +20,13 @@
     body { margin: 0; background: var(--surface-page, #fbf7ea); }
     a { color: var(--olive-600, #6f7c33); text-decoration: none; }
     a:hover { color: var(--plum-500, #56466b); }
+    .cs-tabs { display: flex; }
+    .cs-tabs button { flex: 1; }
+    @media (max-width: 720px) {
+      .cs-tabs { display: grid; grid-template-columns: 1fr 1fr; }
+      .cs-tabs button { min-height: 48px; }
+      .cs-pad { padding: 20px !important; }
+    }
   </style>
 </helmet>
 
@@ -46,20 +53,19 @@
             <div style="font-family:Newsreader,serif;font-size:21px;margin-bottom:4px;">{{ p.title }}</div>
             <div style="font-size:13px;color:var(--text-muted,#6b5f72);">{{ p.scope }}</div>
           </div>
-          <x-import component-from-global-scope="MoranaDesignSystem_7dc002.RingMark" hint-size="36px,36px" size="{{ 36 }}" rings="{{ 4 }}" completed="{{ p.openCount }}"></x-import>
+          <x-import component-from-global-scope="MoranaDesignSystem_7dc002.RingMark" hint-size="36px,36px" size="{{ 36 }}" rings="{{ 4 }}" completed="{{ p.seenCount }}"></x-import>
         </div>
-        <div style="display:flex;flex-direction:column;gap:1px;background:var(--border-subtle);border-top:1px solid var(--border-subtle);">
-          <sc-for list="{{ p.steps }}" as="step" hint-placeholder-count="4">
-            <div style="background:var(--surface-card,#fdfbf4);">
-              <div style="padding:14px 28px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;" onclick="{{ step.onClick }}">
-                <span style="font-size:15px;">{{ step.label }}</span>
-                <span style="font-size:12px;color:var(--olive-600,#6f7c33);">{{ step.indicator }}</span>
-              </div>
-              <sc-if value="{{ step.open }}" hint-placeholder-val="{{ false }}">
-                <div style="padding:0 28px 20px;font-size:15px;line-height:1.6;">{{ step.content }}</div>
-              </sc-if>
-            </div>
-          </sc-for>
+        <div style="border-top:1px solid var(--border-subtle);">
+          <div class="cs-tabs" style="gap:1px;background:var(--border-subtle);border-bottom:1px solid var(--border-subtle);">
+            <sc-for list="{{ p.steps }}" as="step" hint-placeholder-count="4">
+              <button onclick="{{ step.onClick }}" style="{{ step.style }}">{{ step.label }}</button>
+            </sc-for>
+          </div>
+          <div class="cs-pad" style="padding:24px 28px;display:flex;flex-direction:column;gap:14px;">
+            <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--olive-600,#6f7c33);">{{ p.current.num }} {{ p.current.label }}</div>
+            <p style="margin:0;font-size:16px;line-height:1.6;max-width:62ch;">{{ p.current.content }}</p>
+            <div><x-import component-from-global-scope="MoranaDesignSystem_7dc002.Button" hint-size="160px,40px" variant="secondary" size="sm" on-click="{{ p.onNext }}">{{ p.nextLabel }}</x-import></div>
+          </div>
         </div>
       </div>
     </sc-for>
@@ -79,7 +85,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { activeTopic: 'All', open: {} };
+  state = { activeTopic: 'All', step: {}, seen: {} };
 
   TOPICS = ['Human-centric learning', 'Accessibility-first', 'Behavioural design & gamification', 'Mentoring & coaching', 'AI-era ways of working', 'Community & youth support models'];
 
@@ -153,16 +159,21 @@ class Component extends DCLogic {
     const filtered = s.activeTopic === 'All' ? this.PROJECTS : this.PROJECTS.filter(p => p.tags.includes(s.activeTopic));
 
     const visibleProjects = filtered.map(p => {
-      const openMap = s.open[p.key] || {};
-      const openCount = Object.values(openMap).filter(Boolean).length;
-      const steps = p.steps.map(st => {
-        const open = !!openMap[st.key];
-        return {
-          ...st, open, indicator: open ? 'Hide' : 'Expand',
-          onClick: () => this.setState({ open: { ...s.open, [p.key]: { ...openMap, [st.key]: !open } } }),
-        };
-      });
-      return { title: p.title, scope: p.scope, steps, openCount };
+      const cur = s.step[p.key] || 0;
+      const seen = s.seen[p.key] || 1;
+      const go = (n) => this.setState({ step: { ...s.step, [p.key]: n }, seen: { ...s.seen, [p.key]: Math.max(seen, n + 1) } });
+      const steps = p.steps.map((st, i) => ({
+        label: st.label,
+        onClick: () => go(i),
+        style: `font-family:Archivo,sans-serif;font-size:13.5px;padding:13px 8px;border:none;cursor:pointer;transition:background .2s,color .2s;background:${i === cur ? 'var(--accent-quiet,rgba(111,124,51,.14))' : 'var(--surface-card,#fdfbf4)'};color:${i === cur ? 'var(--olive-600,#6f7c33)' : i < seen ? 'var(--text-strong,#2a2030)' : 'var(--text-muted,#6b5f72)'};`,
+      }));
+      const last = cur === p.steps.length - 1;
+      return {
+        title: p.title, scope: p.scope, steps, seenCount: seen,
+        current: { ...p.steps[cur], num: '0' + (cur + 1) },
+        nextLabel: last ? 'Back to context' : 'Next: ' + p.steps[cur + 1].label,
+        onNext: () => go(last ? 0 : cur + 1),
+      };
     });
 
     return {
