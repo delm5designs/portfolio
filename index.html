@@ -24,7 +24,27 @@
     @keyframes ringSpin { to { transform: rotate(360deg); } }
     @keyframes ringSpinRev { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
     @keyframes ringPulse { 0% { transform: scale(.3); opacity: 0; } 12% { opacity: .7; } 100% { transform: scale(1.05); opacity: 0; } }
-    @media (prefers-reduced-motion: reduce) { .ring-field * { animation: none !important; } }
+    @media (prefers-reduced-motion: reduce) { .ring-field *, .orbit { animation: none !important; } }
+    .mr-wrap { position: relative; overflow: hidden; min-height: 440px; display: flex; align-items: center; border: 1px solid var(--border-subtle); border-radius: 2px; background: var(--surface-card, #fdfbf4); padding: 40px; box-sizing: border-box; }
+    .mr-field { position: absolute; right: -150px; top: 50%; transform: translateY(-50%); width: 500px; height: 500px; }
+    .mr-spacer { display: none; }
+    .mr-copy { position: relative; z-index: 2; max-width: 340px; display: flex; flex-direction: column; gap: 14px; }
+    .mr-tabs { display: flex; gap: 6px; margin-top: 6px; }
+    .tm-desk { display: flex; flex-direction: column; gap: 20px; }
+    .tm-mob { display: none; }
+    @media (max-width: 860px) { .tm-desk { display: none !important; } .tm-mob { display: flex !important; flex-direction: column; gap: 18px; } }
+    @media (max-width: 720px) {
+      .mr-wrap { flex-direction: column; align-items: stretch; padding: 0 24px 32px; min-height: 0; }
+      .mr-spacer { display: block; height: 190px; }
+      .mr-field { left: 50%; right: auto; top: -180px; transform: translateX(-50%); width: 360px; height: 360px; }
+      .mr-copy { max-width: none; }
+      .mr-tabs { display: grid; grid-template-columns: repeat(4, 1fr); }
+      .mr-tabs button { min-height: 44px; }
+      .mr-hint { display: none; }
+      .tm-desk { display: none; }
+      .tm-mob { display: flex; flex-direction: column; gap: 18px; }
+      .tm-chips button { min-height: 44px; }
+    }
     /* On phones the ring field is wider than the column and sits behind the
        hero copy, which makes the headline and paragraph hard to read. */
     @media (max-width: 720px) { .ring-field { display: none; } }
@@ -34,7 +54,7 @@
 <dc-import name="SiteNav" active="home" hint-size="100%,80px"></dc-import>
 
 <!-- HERO -->
-<div style="position:relative;overflow:hidden;min-height:460px;display:flex;align-items:center;padding:80px 5vw;background:var(--surface-page,#fbf7ea);">
+<div style="position:relative;overflow:hidden;min-height:460px;display:flex;align-items:center;padding:80px 0;background:var(--surface-page,#fbf7ea);">
   <sc-if value="{{ showRingField }}" hint-placeholder-val="{{ true }}">
   <div class="ring-field" style="position:absolute;top:50%;right:6vmin;transform:translateY(-50%);width:42vmin;max-width:480px;min-width:300px;aspect-ratio:1;pointer-events:none;">
     <div style="position:absolute;inset:0;margin:auto;width:28%;height:28%;border-radius:50%;border:2px solid var(--sage-500,#4e7a55);animation:ringSpin 16s linear infinite;transform-origin:center;"><span style="position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:9px;height:9px;border-radius:50%;background:var(--sage-500,#4e7a55);"></span></div>
@@ -44,6 +64,7 @@
     <div style="position:absolute;inset:0;margin:auto;width:100%;height:100%;border-radius:50%;border:2px solid var(--olive-600,#6f7c33);opacity:0;animation:ringPulse 7s cubic-bezier(.22,.7,.3,1) infinite;transform-origin:center;"></div>
   </div>
   </sc-if>
+  <div style="flex:1;max-width:1140px;margin:0 auto;padding:0 5vw;position:relative;z-index:2;font-family:Archivo,sans-serif;">
   <div style="position:relative;z-index:2;max-width:500px;display:flex;flex-direction:column;gap:20px;text-align:left;animation:riseFade 1.1s cubic-bezier(.2,.8,.2,1) both;">
     <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:{{ heroAccentColor }};">L&amp;D · Psychology</div>
     <h1 style="font-family:Newsreader,serif;font-weight:400;font-size:48px;line-height:1.05;letter-spacing:-0.024em;margin:0;color:var(--text-strong,#2a2030);">{{ heroHeadline }}</h1>
@@ -53,46 +74,84 @@
       <a href="Say Hi.dc.html" style="padding:13px 24px;border-radius:2px;border:1px solid var(--border-strong,rgba(42,32,48,.32));color:var(--text-strong,#2a2030);font-size:14.5px;font-weight:500;">Say hi</a>
     </div>
   </div>
+  </div>
 </div>
 
 <div style="max-width:1140px;margin:0 auto;padding:0 5vw 120px;display:flex;flex-direction:column;gap:96px;font-family:Archivo,sans-serif;">
 
-  <!-- OBSESSIONS AS DOORWAYS -->
+  <!-- TOPIC MAP -->
   <div style="display:flex;flex-direction:column;gap:28px;">
-    
-    <x-import component-from-global-scope="MoranaDesignSystem_7dc002.SectionHeading" hint-size="100%,120px" eyebrow="Pick a thread" title="What I'm currently passionate about:" lead="Click through the topics and explore the Projects or Credentials connected to that thread.">
-    </x-import><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--border-subtle);border:1px solid var(--border-subtle);">
-      <sc-for list="{{ obsessions }}" as="ob" hint-placeholder-count="6">
-        <div style="background:var(--surface-card,#fdfbf4);padding:24px;display:flex;flex-direction:column;gap:10px;">
-          <div style="font-family:Newsreader,serif;font-size:18px;">{{ ob.title }}</div>
-          <p style="margin:0;font-size:14.5px;line-height:1.55;color:var(--text-body,#4a3f50);">{{ ob.desc }}</p>
-          <div style="display:flex;gap:16px;margin-top:6px;">
-            <sc-for list="{{ ob.links }}" as="lk" hint-placeholder-count="2">
-              <a href="{{ lk.href }}" style="font-size:13px;">{{ lk.label }}</a>
-            </sc-for>
-          </div>
+    <x-import component-from-global-scope="MoranaDesignSystem_7dc002.SectionHeading" hint-size="100%,120px" eyebrow="Pick a thread" title="What I'm currently passionate about:" lead="Hover or tap a topic to see the projects and credentials connected to it."></x-import>
+
+    <div class="tm-desk" style="flex-direction:column;align-items:center;gap:8px;">
+      <div style="position:relative;width:720px;height:480px;">
+        <sc-for list="{{ mmLines }}" as="l" hint-placeholder-count="0">
+          <div style="{{ l.style }}"></div>
+        </sc-for>
+        <sc-for list="{{ mmKids }}" as="k" hint-placeholder-count="0">
+          <a href="{{ k.href }}" tabindex="{{ k.tab }}" style="{{ k.style }}">
+            <span style="font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:{{ k.tagColor }};">{{ k.kind }}</span>
+            <span>{{ k.label }}</span>
+          </a>
+        </sc-for>
+        <sc-for list="{{ mmTopics }}" as="t" hint-placeholder-count="6">
+          <button onClick="{{ t.onClick }}" aria-pressed="{{ t.on }}" style="{{ t.style }}">{{ t.label }}</button>
+        </sc-for>
+        <div style="position:absolute;left:360px;top:240px;transform:translate(-50%,-50%);width:88px;height:88px;border-radius:50%;background:var(--surface-inverse,#2a2030);color:var(--text-on-dark,#efe3a9);display:flex;align-items:center;justify-content:center;font-family:Newsreader,serif;font-size:20px;z-index:3;">Elena</div>
+      </div>
+      <p style="margin:0;font-size:15.5px;line-height:1.6;max-width:60ch;text-align:center;color:var(--text-body,#4a3f50);">{{ mmDesc }}</p>
+    </div>
+
+    <div class="tm-mob">
+      <div class="tm-chips" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin:0 -5vw;padding-left:5vw;padding-right:5vw;">
+        <sc-for list="{{ mapTopics }}" as="t" hint-placeholder-count="8">
+          <button onClick="{{ t.onPick }}" style="{{ t.chipStyle }}">{{ t.label }}</button>
+        </sc-for>
+      </div>
+      <p style="margin:0;font-size:15px;line-height:1.6;color:var(--text-body,#4a3f50);">{{ mapActive.desc }}</p>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted,#6b5f72);">Projects</div>
+        <sc-for list="{{ mapProjectsOn }}" as="p" hint-placeholder-count="2">
+          <a href="{{ p.href }}" style="padding:14px 16px;border:1px solid var(--olive-600,#6f7c33);background:var(--accent-quiet,rgba(111,124,51,.12));border-radius:2px;font-family:Newsreader,serif;font-size:16px;color:var(--text-strong,#2a2030);">{{ p.label }}</a>
+        </sc-for>
+        <sc-if value="{{ mapNoProject }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:14px 16px;border:1px dashed var(--border-strong,rgba(42,32,48,.32));border-radius:2px;font-size:13px;color:var(--text-muted,#6b5f72);">No case study yet - credential only</div>
+        </sc-if>
+      </div>
+      <sc-if value="{{ mapHasCreds }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted,#6b5f72);">Credentials</div>
+          <sc-for list="{{ mapCredsOn }}" as="c" hint-placeholder-count="1">
+            <a href="{{ c.href }}" style="padding:14px 16px;border:1px solid var(--border-subtle);background:var(--surface-card,#fdfbf4);border-radius:2px;font-family:Newsreader,serif;font-size:16px;color:var(--text-strong,#2a2030);">{{ c.label }}</a>
+          </sc-for>
         </div>
-      </sc-for>
+      </sc-if>
     </div>
   </div>
 
-  <!-- HOW I WORK - STEPPER -->
+  <!-- HOW I WORK - METHOD RINGS -->
   <div style="display:flex;flex-direction:column;gap:28px;">
-    <x-import component-from-global-scope="MoranaDesignSystem_7dc002.SectionHeading" hint-size="100%,100px" eyebrow="Method" title="How I work" mark="true">
-    </x-import>
-    <div style="display:flex;gap:32px;flex-wrap:wrap;">
-      <div style="display:flex;flex-direction:column;gap:1px;box-sizing:border-box;min-width:min(100%,220px);flex:0 0 auto;">
-        <sc-for list="{{ workSteps }}" as="step" hint-placeholder-count="4">
-          <div style="padding:16px 0;cursor:pointer;border-bottom:1px solid var(--border-subtle);display:flex;align-items:baseline;gap:12px;" onclick="{{ step.onClick }}">
-            <span style="font-family:Archivo,sans-serif;font-size:12px;color:var(--olive-600,#6f7c33);">{{ step.number }}</span>
-            <span style="{{ step.labelStyle }}">{{ step.label }}</span>
+    <x-import component-from-global-scope="MoranaDesignSystem_7dc002.SectionHeading" hint-size="100%,100px" eyebrow="Method" title="How I work" mark="true"></x-import>
+    <div class="mr-wrap">
+      <div class="mr-spacer"></div>
+      <div class="mr-field" onMouseEnter="{{ pauseRings }}" onMouseLeave="{{ playRings }}">
+        <sc-for list="{{ rings }}" as="r" hint-placeholder-count="4">
+          <div class="orbit" style="{{ r.style }}">
+            <button aria-label="{{ r.label }}" onClick="{{ r.onClick }}" style="{{ r.nodeStyle }}"></button>
           </div>
         </sc-for>
       </div>
-      <div style="flex:1;box-sizing:border-box;min-width:min(100%,260px);border:1px solid var(--border-subtle);border-radius:2px;padding:28px;background:var(--surface-card,#fdfbf4);display:flex;flex-direction:column;gap:16px;">
-        <x-import component-from-global-scope="MoranaDesignSystem_7dc002.RingMark" hint-size="44px,44px" size="{{ 44 }}" rings="{{ 4 }}" completed="{{ activeStepNumber }}"></x-import>
-        <p style="margin:0;font-size:16px;line-height:1.6;">{{ activeStepDetail }}</p>
-        <p style="margin:0;font-size:15px;line-height:1.6;color:var(--text-muted,#6b5f72);">{{ activeStepDetailExtra }}</p>
+      <div class="mr-copy">
+        <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--olive-600,#6f7c33);">Step {{ ringStep.number }} / 04</div>
+        <div style="font-family:Newsreader,serif;font-weight:400;font-size:36px;line-height:1.05;letter-spacing:-0.024em;color:var(--text-strong,#2a2030);">{{ ringStep.label }}</div>
+        <p style="margin:0;font-size:16px;line-height:1.6;">{{ ringStep.detail }}</p>
+        <p style="margin:0;font-size:15px;line-height:1.6;color:var(--text-muted,#6b5f72);">{{ ringStep.extra }}</p>
+        <div class="mr-tabs">
+          <sc-for list="{{ ringTabs }}" as="t" hint-placeholder-count="4">
+            <button onClick="{{ t.onClick }}" aria-label="{{ t.label }}" style="{{ t.style }}">{{ t.number }}</button>
+          </sc-for>
+        </div>
+        <p class="mr-hint" style="margin:0;font-size:12.5px;color:var(--text-muted,#6b5f72);">Hover the rings to stop them. Click a node to jump to that step.</p>
       </div>
     </div>
   </div>
@@ -136,24 +195,40 @@
   &quot;defaultWorkStep&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 0, &quot;min&quot;: 0, &quot;max&quot;: 3, &quot;step&quot;: 1, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;How I work&quot;}
 }">
 class Component extends DCLogic {
-  state = { activeStep: this.props.defaultWorkStep ?? 0 };
-
-  OBSESSIONS = [
-    { title: 'Metalearning', desc: 'I teach people how to learn - faster, and in a way that sticks - always in service of a real goal, never taught as an abstract skill.', links: [{ label: 'See it in action', href: 'Projects.dc.html' }] },
-    { title: 'Curriculum & instructional design', desc: 'Structured learning that gets built once and holds up - onboarding, courses, audits.', links: [{ label: 'Credential', href: 'Credentials.dc.html' }] },
-    { title: 'Human-centric learning', desc: 'I design for real people in real contexts - not "perfect learners."', topic: 'Human-centric learning' },
-    { title: 'Accessibility-first', desc: 'Clarity, inclusive formats, and fewer hidden barriers.', topic: 'Accessibility-first' },
-    { title: 'Behavioural design & gamification', desc: 'Motivation isn\'t a mystery - design can support it (Octalysis).', topic: 'Behavioural design & gamification' },
-    { title: 'Mentoring & coaching', desc: 'I love building growth environments, not just content.', topic: 'Mentoring & coaching' },
-    { title: 'AI-era ways of working', desc: 'Helping teams use AI for learning thoughtfully, not chaotically.', topic: 'AI-era ways of working' },
-    { title: 'Community & youth support models', desc: 'Services that feel like a "one-stop shop" for people.', topic: 'Community & youth support models' },
-  ];
+  state = { activeStep: this.props.defaultWorkStep ?? 0, paused: false, topic: 0, mm: 0 };
 
   WORK_STEPS = [
     { number: '01', label: 'Clarify', detail: 'Clarify the real problem, and what success looks like - before designing anything.', extra: 'That usually means asking why the current approach isn\'t working before proposing a new one.' },
     { number: '02', label: 'Design for humans', detail: 'Motivation, accessibility, context, constraints - the programme is built around the people in it, not a template.', extra: 'I\'d rather ship something smaller that fits the room than something impressive that doesn\'t.' },
     { number: '03', label: 'Build small + test', detail: 'Pilot, iterate, then scale. Nothing goes wide before it has been tried on real people.', extra: 'Early feedback is cheap; a wrong assumption at full scale is not.' },
     { number: '04', label: 'Leave a trail', detail: 'Artefacts, toolkits, and a clear handover, so the work keeps running without me in the room.', extra: 'The goal is capability that outlasts the engagement, not dependence on me.' },
+  ];
+
+  PROJECTS = [
+    { key: 'onboarding', label: 'Onboarding standard for a distributed educator team' },
+    { key: 'capacity', label: 'Capacity-building for a distributed volunteer network' },
+    { key: 'curriculum', label: 'Narrative-driven B1 English curriculum' },
+    { key: 'confidence', label: 'Confidence and capability with young women' },
+  ];
+
+  CREDS = [
+    { key: 'ld', label: 'Certificate program in L&D' },
+    { key: 'octalysis', label: 'Gamification & behavioural design - Octalysis' },
+    { key: 'a11y', label: 'Digital accessibility training' },
+    { key: 'ai', label: 'AI best practices for people managers' },
+    { key: 'mentor', label: 'Be a great mentor' },
+    { key: 'ohjaamo', label: 'Finnish Ohjaamo methodology' },
+  ];
+
+  TOPICS = [
+    { title: 'Metalearning', desc: 'I teach people how to learn - faster, and in a way that sticks - always in service of a real goal, never taught as an abstract skill.', projects: ['onboarding', 'capacity', 'curriculum', 'confidence'], creds: [], links: [{ label: 'See it in action', href: 'Projects.dc.html' }] },
+    { title: 'Curriculum & instructional design', desc: 'Structured learning that gets built once and holds up - onboarding, courses, audits.', projects: ['curriculum'], creds: ['ld'], links: [{ label: 'Credential', href: 'Credentials.dc.html' }] },
+    { title: 'Human-centric learning', topic: 'Human-centric learning', desc: 'I design for real people in real contexts - not "perfect learners."', projects: ['onboarding', 'capacity', 'curriculum'], creds: ['ld'] },
+    { title: 'Accessibility-first', topic: 'Accessibility-first', desc: 'Clarity, inclusive formats, and fewer hidden barriers.', projects: [], creds: ['a11y'] },
+    { title: 'Behavioural design & gamification', topic: 'Behavioural design & gamification', desc: 'Motivation isn\'t a mystery - design can support it (Octalysis).', projects: [], creds: ['octalysis'] },
+    { title: 'Mentoring & coaching', topic: 'Mentoring & coaching', desc: 'I love building growth environments, not just content.', projects: ['onboarding', 'confidence'], creds: ['mentor'] },
+    { title: 'AI-era ways of working', topic: 'AI-era ways of working', desc: 'Helping teams use AI for learning thoughtfully, not chaotically.', projects: [], creds: ['ai'] },
+    { title: 'Community & youth support models', topic: 'Community & youth support models', desc: 'Services that feel like a "one-stop shop" for people.', projects: ['capacity', 'confidence'], creds: ['ohjaamo'] },
   ];
 
   WORK_OFFERINGS = [
@@ -163,27 +238,100 @@ class Component extends DCLogic {
     { track: 'individual', trackLabel: 'Individual', name: 'Learning How to Learn (programs)', items: ['Group program (cohort-based)', 'Individual program (1:1)'] },
   ];
 
-  renderVals() {
-    const obsessions = this.OBSESSIONS.map(o => ({
-      title: o.title, desc: o.desc,
-      links: o.links || [
-        { label: 'See it in Projects', href: `Projects.dc.html?topic=${encodeURIComponent(o.topic)}` },
-        { label: 'Credential', href: `Credentials.dc.html?topic=${encodeURIComponent(o.topic)}` },
-      ],
-    }));
+MM = [
+    { topic: 2, label: 'Human-centric', kids: [['P', 'Onboarding standard'], ['P', 'Volunteer network'], ['P', 'B1 curriculum'], ['C', 'L&D certificate']] },
+    { topic: 3, label: 'Accessibility', kids: [['C', 'Accessibility training']] },
+    { topic: 4, label: 'Behavioural design', kids: [['C', 'Octalysis']] },
+    { topic: 5, label: 'Mentoring', kids: [['P', 'Onboarding standard'], ['P', 'Confidence programme'], ['C', 'Mentor course']] },
+    { topic: 6, label: 'AI-era work', kids: [['C', 'AI for managers']] },
+    { topic: 7, label: 'Community models', kids: [['P', 'Volunteer network'], ['P', 'Confidence programme'], ['C', 'Ohjaamo method']] },
+  ];
 
-    const active = this.state.activeStep;
-    const workSteps = this.WORK_STEPS.map((s, i) => ({
-      number: s.number, label: s.label,
-      labelStyle: `font-family:Newsreader,serif;font-size:17px;color:${i === active ? 'var(--olive-600,#6f7c33)' : 'inherit'};`,
-      onClick: () => this.setState({ activeStep: i }),
-    }));
+  mindMap() {
+    const s = this.state, olive = '#6f7c33', plum = '#56466b', ink = '#2a2030', ease = 'cubic-bezier(.2,.8,.2,1)';
+    const cx = 360, cy = 240, rad = (a) => a * Math.PI / 180;
+    const line = (x1, y1, x2, y2, on, delay, strong) => {
+      const len = Math.hypot(x2 - x1, y2 - y1), ang = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+      return { style: 'position:absolute;left:' + x1 + 'px;top:' + (y1 - 1) + 'px;width:' + len + 'px;height:2px;background:' + (strong ? 'rgba(86,70,107,.55)' : 'rgba(42,32,48,.2)') + ';transform-origin:0 50%;transform:rotate(' + ang + 'deg) scaleX(' + (on ? 1 : 0) + ');transition:transform .7s ' + ease + ' ' + delay + 'ms,background .3s;' };
+    };
+    const mmLines = [], mmKids = [], mmTopics = [];
+    this.MM.forEach((t, i) => {
+      const a = -90 + i * 60, tx = cx + 130 * Math.cos(rad(a)), ty = cy + 118 * Math.sin(rad(a)), on = s.mm === i;
+      const topicName = this.TOPICS[t.topic].topic;
+      mmLines.push(line(cx, cy, tx, ty, true, 0, on));
+      t.kids.forEach((kd, j) => {
+        const off = j - (t.kids.length - 1) / 2, kx = i === 0 || i === 3 ? 360 + off * 175 : (i < 3 ? 636 : 94), ky = i === 0 ? 40 : i === 3 ? 440 : ty + off * 56;
+        const d = on ? 300 + j * 110 : 0;
+        mmLines.push(line(tx, ty, kx, ky, on, on ? 120 + j * 110 : 0, true));
+        mmKids.push({
+          label: kd[1], kind: kd[0] === 'P' ? 'Project' : 'Credential', tagColor: kd[0] === 'P' ? olive : '#4e7a55', tab: on ? 0 : -1,
+          href: (kd[0] === 'P' ? 'Projects.dc.html' : 'Credentials.dc.html') + '?topic=' + encodeURIComponent(topicName),
+          style: 'position:absolute;left:' + kx + 'px;top:' + ky + 'px;z-index:2;display:flex;flex-direction:column;gap:1px;padding:7px 11px;border-radius:2px;white-space:nowrap;font-size:12.5px;color:' + ink + ';background:#fdfbf4;border:1px solid ' + (kd[0] === 'P' ? 'rgba(111,124,51,.6)' : 'rgba(78,122,85,.5)') + ';transform:translate(-50%,-50%) scale(' + (on ? 1 : 0.85) + ');opacity:' + (on ? 1 : 0) + ';pointer-events:' + (on ? 'auto' : 'none') + ';transition:opacity .5s ' + ease + ' ' + d + 'ms,transform .6s ' + ease + ' ' + d + 'ms,border-color .2s;',
+        });
+      });
+      mmTopics.push({
+        label: t.label, on, onClick: () => this.setState({ mm: i }),
+        style: 'position:absolute;left:' + tx + 'px;top:' + ty + 'px;transform:translate(-50%,-50%);z-index:3;font-family:Newsreader,serif;font-size:15px;padding:8px 14px;min-height:40px;border-radius:2px;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s,border-color .2s;background:' + (on ? plum : '#fbf7ea') + ';color:' + (on ? '#efe3a9' : ink) + ';border:1px solid ' + (on ? plum : 'rgba(42,32,48,.32)') + ';',
+      });
+    });
+    return { mmLines, mmKids, mmTopics, mmDesc: this.TOPICS[this.MM[s.mm].topic].desc };
+  }
+
+  chip(active) {
+    const b = 'font-family:Archivo,sans-serif;font-size:13px;padding:8px 14px;border-radius:2px;cursor:pointer;transition:background .2s,border-color .2s,color .2s;';
+    return active
+      ? b + 'border:1px solid var(--olive-600,#6f7c33);background:var(--accent-quiet,rgba(111,124,51,.12));color:var(--olive-600,#6f7c33);'
+      : b + 'border:1px solid var(--border-subtle);background:transparent;color:var(--text-body,#4a3f50);';
+  }
+
+  topicHref(t, page) {
+    return t.topic ? page + '?topic=' + encodeURIComponent(t.topic) : page;
+  }
+
+  renderVals() {
+    const s = this.state;
+    const ink = 'var(--text-strong,#2a2030)', olive = 'var(--olive-600,#6f7c33)', plum = 'var(--plum-500,#56466b)';
+
+    const widths = [28, 54, 78, 100], speeds = [16, 26, 40, 58];
+    const rings = this.WORK_STEPS.map((st, i) => {
+      const on = s.activeStep === i;
+      return {
+        label: 'Step ' + st.number + ': ' + st.label,
+        style: `position:absolute;inset:0;margin:auto;width:${widths[i]}%;height:${widths[i]}%;border-radius:50%;box-sizing:border-box;border:2px solid ${on ? olive : 'rgba(42,32,48,.22)'};transition:border-color .3s;animation:${i % 2 ? 'ringSpinRev' : 'ringSpin'} ${speeds[i]}s linear infinite;animation-play-state:${s.paused ? 'paused' : 'running'};`,
+        nodeStyle: `position:absolute;top:0;left:50%;transform:translate(-50%,-50%) scale(${on ? 1.35 : 1});width:16px;height:16px;padding:0;border-radius:50%;cursor:pointer;border:2px solid ${on ? olive : plum};background:${on ? olive : 'var(--surface-page,#fbf7ea)'};transition:transform .2s cubic-bezier(.2,.8,.2,1),background .2s;`,
+        onClick: () => this.setState({ activeStep: i }),
+      };
+    });
+    const ringTabs = this.WORK_STEPS.map((st, i) => ({ number: st.number, label: st.label, style: this.chip(s.activeStep === i), onClick: () => this.setState({ activeStep: i }) }));
+
+    const t = this.TOPICS[s.topic];
+    const itemStyle = (on) => `display:block;padding:9px 12px;border-radius:2px;font-size:13.5px;line-height:1.35;transition:background .2s,border-color .2s,color .2s;border:1px solid ${on ? olive : 'var(--border-subtle)'};background:${on ? 'var(--accent-quiet,rgba(111,124,51,.12))' : 'var(--surface-card,#fdfbf4)'};color:${on ? ink : 'var(--text-muted,#6b5f72)'};`;
+    const mapTopics = this.TOPICS.map((tp, i) => {
+      const on = s.topic === i;
+      return {
+        label: tp.title,
+        count: tp.projects.length ? `${tp.projects.length} + ${tp.creds.length}` : `${tp.creds.length} cred`,
+        onPick: () => this.setState({ topic: i }),
+        style: `display:flex;justify-content:space-between;align-items:baseline;gap:10px;text-align:left;font-family:Newsreader,serif;font-size:15.5px;padding:9px 12px;border-radius:2px;cursor:pointer;transition:background .2s,border-color .2s,color .2s;border:1px solid ${on ? plum : 'transparent'};background:${on ? 'var(--surface-card,#fdfbf4)' : 'transparent'};color:${on ? plum : ink};`,
+        chipStyle: this.chip(on) + 'font-family:Newsreader,serif;font-size:14.5px;white-space:nowrap;flex:none;',
+      };
+    });
+    const projHref = this.topicHref(t, 'Projects.dc.html'), credHref = this.topicHref(t, 'Credentials.dc.html');
+    const mapProjects = this.PROJECTS.map(p => ({ label: p.label, href: projHref, style: itemStyle(t.projects.includes(p.key)) }));
+    const mapCreds = this.CREDS.map(c => ({ label: c.label, href: credHref, style: itemStyle(t.creds.includes(c.key)) }));
+    const mapProjectsOn = this.PROJECTS.filter(p => t.projects.includes(p.key)).map(p => ({ label: p.label, href: projHref }));
+    const mapCredsOn = this.CREDS.filter(c => t.creds.includes(c.key)).map(c => ({ label: c.label, href: credHref }));
+    const mapActive = {
+      title: t.title, desc: t.desc,
+      links: t.links || [{ label: 'See it in Projects', href: projHref }, { label: 'Credential', href: credHref }],
+    };
 
     return {
-      obsessions, workSteps,
-      activeStepNumber: active + 1,
-      activeStepDetail: this.WORK_STEPS[active].detail,
-      activeStepDetailExtra: this.WORK_STEPS[active].extra,
+      ...this.mindMap(),
+      mapTopics, mapProjects, mapCreds, mapProjectsOn, mapCredsOn, mapActive,
+      mapNoProject: t.projects.length === 0, mapHasCreds: t.creds.length > 0,
+      rings, ringTabs, ringStep: this.WORK_STEPS[s.activeStep],
+      pauseRings: () => this.setState({ paused: true }), playRings: () => this.setState({ paused: false }),
       workOfferings: this.WORK_OFFERINGS,
       heroHeadline: this.props.heroHeadline ?? "Hi, I'm Elena!",
       ctaPrimaryLabel: this.props.ctaPrimaryLabel ?? 'Try the tools',

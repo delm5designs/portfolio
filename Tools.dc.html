@@ -20,6 +20,15 @@
     body { margin: 0; background: var(--surface-page, #fbf7ea); }
     a { color: var(--olive-600, #6f7c33); text-decoration: none; }
     a:hover { color: var(--plum-500, #56466b); }
+    .my-desk { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+    .my-mob { display: none; }
+    .fc-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    @media (max-width: 760px) {
+      .my-desk { display: none; }
+      .my-mob { display: flex; flex-direction: column; gap: 12px; }
+      .fc-chips { display: grid; grid-template-columns: repeat(4, 1fr); }
+      .fc-chips button { min-height: 44px; }
+    }
   </style>
 </helmet>
 
@@ -31,6 +40,71 @@
     eyebrow="Tools" title="I'd rather show the science working than tell you it does"
     lead="Three small tools, each built on a real piece of learning science. Run them - each one measures something about how you learn, rather than just explaining the theory.">
   </x-import>
+
+<!-- WARM-UP: MYTH OR EVIDENCE -->
+  <div style="display:flex;flex-direction:column;gap:24px;">
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--olive-600,#6f7c33);">Warm-up</div>
+      <div style="font-family:Newsreader,serif;font-weight:400;letter-spacing:-0.024em;line-height:1.05;margin:0;color:var(--text-strong,#2a2030);font-size:34px;">Guess <em style="color:var(--plum-500,#56466b);">first</em>, then check</div>
+      <p style="margin:0;font-size:16px;line-height:1.6;max-width:52ch;">Three claims about studying. Committing to an answer before you see the evidence is itself a learning technique.</p>
+    </div>
+    <div class="my-desk">
+      <sc-for list="{{ myths }}" as="m" hint-placeholder-count="3">
+        <div style="height:320px;perspective:1100px;">
+          <div style="{{ m.innerStyle }}">
+              <div style="position:absolute;inset:0;backface-visibility:hidden;background:var(--surface-card,#fdfbf4);border:1px solid var(--border-subtle);border-radius:2px;padding:24px;display:flex;flex-direction:column;gap:14px;box-sizing:border-box;">
+                <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--olive-600,#6f7c33);">{{ m.num }} Evidence or myth?</div>
+                <div style="font-family:Newsreader,serif;font-size:21px;line-height:1.24;flex:1;color:var(--text-strong,#2a2030);">{{ m.claim }}</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                  <x-import component-from-global-scope="MoranaDesignSystem_7dc002.Button" hint-size="100px,40px" variant="secondary" size="sm" on-click="{{ m.sayTrue }}">Evidence</x-import>
+                  <x-import component-from-global-scope="MoranaDesignSystem_7dc002.Button" hint-size="80px,40px" variant="secondary" size="sm" on-click="{{ m.sayMyth }}">Myth</x-import>
+                </div>
+              </div>
+              <div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);background:var(--surface-inverse,#2a2030);color:var(--text-on-dark,#efe3a9);border-radius:2px;padding:24px;display:flex;flex-direction:column;gap:10px;box-sizing:border-box;">
+                <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:#b9c27a;">{{ m.verdict }}</div>
+                <div style="font-family:Newsreader,serif;font-size:20px;line-height:1.3;">{{ m.feedback }}</div>
+                <p style="margin:0;font-size:14.5px;line-height:1.55;flex:1;color:rgba(239,227,169,.86);">{{ m.why }}</p>
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid rgba(239,227,169,.28);padding-top:12px;">
+                  <span style="font-size:12.5px;">{{ m.cite }}</span>
+                  <button onClick="{{ m.next }}" style="font-family:Archivo,sans-serif;font-size:13.5px;padding:0 16px;min-height:44px;background:transparent;color:#efe3a9;border:1px solid rgba(239,227,169,.4);border-radius:2px;cursor:pointer;">{{ m.nextLabel }}</button>
+                </div>
+              </div>
+            </div>
+        </div>
+      </sc-for>
+    </div>
+    <div class="my-mob">
+      <div style="display:flex;justify-content:flex-end;"><span style="font-size:12.5px;color:var(--text-muted,#6b5f72);">{{ mythProgress }}</span></div>
+      <sc-for list="{{ mythsM }}" as="m" hint-placeholder-count="1">
+        <div style="height:380px;perspective:1100px;">
+          <div style="{{ m.innerStyle }}">
+              <div style="position:absolute;inset:0;backface-visibility:hidden;background:var(--surface-card,#fdfbf4);border:1px solid var(--border-subtle);border-radius:2px;padding:24px;display:flex;flex-direction:column;gap:14px;box-sizing:border-box;">
+                <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--olive-600,#6f7c33);">{{ m.num }} Evidence or myth?</div>
+                <div style="font-family:Newsreader,serif;font-size:24px;line-height:1.24;flex:1;color:var(--text-strong,#2a2030);">{{ m.claim }}</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <x-import component-from-global-scope="MoranaDesignSystem_7dc002.Button" hint-size="100%,48px" variant="secondary" full-width="{{ true }}" on-click="{{ m.sayTrue }}">It's evidence</x-import>
+                  <x-import component-from-global-scope="MoranaDesignSystem_7dc002.Button" hint-size="100%,48px" variant="secondary" full-width="{{ true }}" on-click="{{ m.sayMyth }}">It's a myth</x-import>
+                </div>
+              </div>
+              <div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);background:var(--surface-inverse,#2a2030);color:var(--text-on-dark,#efe3a9);border-radius:2px;padding:24px;display:flex;flex-direction:column;gap:10px;box-sizing:border-box;">
+                <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:#b9c27a;">{{ m.verdict }}</div>
+                <div style="font-family:Newsreader,serif;font-size:20px;line-height:1.3;">{{ m.feedback }}</div>
+                <p style="margin:0;font-size:14.5px;line-height:1.55;flex:1;color:rgba(239,227,169,.86);">{{ m.why }}</p>
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid rgba(239,227,169,.28);padding-top:12px;">
+                  <span style="font-size:12.5px;">{{ m.cite }}</span>
+                  <button onClick="{{ m.next }}" style="font-family:Archivo,sans-serif;font-size:13.5px;padding:0 16px;min-height:44px;background:transparent;color:#efe3a9;border:1px solid rgba(239,227,169,.4);border-radius:2px;cursor:pointer;">{{ m.nextLabel }}</button>
+                </div>
+              </div>
+            </div>
+        </div>
+      </sc-for>
+      <div style="display:flex;gap:4px;justify-content:center;">
+        <sc-for list="{{ mythDots }}" as="d" hint-placeholder-count="3">
+          <button onClick="{{ d.onClick }}" aria-label="{{ d.label }}" style="width:44px;height:44px;padding:0;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;"><span style="{{ d.style }}"></span></button>
+        </sc-for>
+      </div>
+    </div>
+  </div>
 
   <!-- TOOL 1: KNOWLEDGE CALIBRATION -->
   <div style="display:flex;flex-direction:column;gap:24px;">
@@ -161,6 +235,40 @@
     </x-import>
   </div>
 
+  <!-- WHY IT STICKS: FORGETTING CURVE -->
+  <div style="display:flex;flex-direction:column;gap:20px;border-top:1px solid var(--border-subtle);padding-top:64px;">
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--olive-600,#6f7c33);">The spacing effect</div>
+      <div style="font-family:Newsreader,serif;font-weight:400;letter-spacing:-0.024em;line-height:1.05;margin:0;color:var(--text-strong,#2a2030);font-size:34px;">Why my programmes <em style="color:var(--plum-500,#56466b);">revisit</em>, not repeat</div>
+      <p style="margin:0;font-size:16px;line-height:1.6;max-width:52ch;">Pick the days you'd review something and watch how much of it is still there on day 30.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:1px;background:var(--border-subtle);border:1px solid var(--border-subtle);max-width:520px;">
+      <div style="background:var(--surface-card,#fdfbf4);padding:14px 18px;display:flex;flex-direction:column;gap:2px;"><span style="font-size:12px;color:var(--text-muted,#6b5f72);">Day 30, no reviews</span><span style="font-family:Newsreader,serif;font-size:32px;color:var(--text-muted,#6b5f72);">{{ fcBaseEnd }}</span></div>
+      <div style="background:var(--surface-card,#fdfbf4);padding:14px 18px;display:flex;flex-direction:column;gap:2px;"><span style="font-size:12px;color:var(--olive-600,#6f7c33);">Day 30, your schedule</span><span style="font-family:Newsreader,serif;font-size:32px;">{{ fcEnd }}</span></div>
+    </div>
+    <div style="max-width:760px;">
+      <svg viewBox="0 0 600 230" style="width:100%;height:auto;display:block;">
+        <line x1="40" y1="200" x2="590" y2="200" stroke="rgba(42,32,48,.32)" stroke-width="1.4"></line>
+        <line x1="40" y1="30" x2="40" y2="200" stroke="rgba(42,32,48,.32)" stroke-width="1.4"></line>
+        <path d="{{ fcMarks }}" stroke="rgba(86,70,107,.4)" stroke-width="1.4" stroke-dasharray="3 5" fill="none"></path>
+        <path d="{{ fcBase }}" fill="none" stroke="rgba(42,32,48,.3)" stroke-width="2.4" stroke-dasharray="6 6"></path>
+        <path d="{{ fcPath }}" fill="none" stroke="#6f7c33" stroke-width="2.8" style="transition:d .6s cubic-bezier(.2,.8,.2,1);"></path>
+        <text x="48" y="24" font-size="15" fill="#6b5f72" font-family="Archivo">100%</text>
+        <text x="40" y="224" font-size="15" fill="#6b5f72" font-family="Archivo">Day 0</text>
+        <text x="590" y="224" text-anchor="end" font-size="15" fill="#6b5f72" font-family="Archivo">Day 30</text>
+      </svg>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;max-width:760px;">
+      <span style="font-size:13px;">Review on</span>
+      <div class="fc-chips">
+        <sc-for list="{{ fcChips }}" as="c" hint-placeholder-count="7">
+          <button onClick="{{ c.onClick }}" aria-pressed="{{ c.on }}" style="{{ c.style }}">{{ c.label }}</button>
+        </sc-for>
+      </div>
+      <span style="font-size:12.5px;color:var(--text-muted,#6b5f72);">Illustrative decay model, not measured data.</span>
+    </div>
+  </div>
+
 </div>
 
 <dc-import name="SiteFooter" hint-size="100%,180px"></dc-import>
@@ -168,6 +276,54 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
+  MYTHS = [
+    { claim: 'Teaching to your learning style helps you learn more.', truth: false, why: 'Matching lessons to "visual" or "auditory" styles has not been shown to improve learning. Matching the method to the content does.', cite: 'Pashler et al., 2008' },
+    { claim: 'Testing yourself beats rereading for long-term memory.', truth: true, why: 'Retrieval practice produces stronger retention a week later than the same time spent rereading.', cite: 'Roediger & Karpicke, 2006' },
+    { claim: 'Highlighting is an effective way to study.', truth: false, why: 'Highlighting feels productive but was rated low utility - it marks text without making you retrieve it.', cite: 'Dunlosky et al., 2013' },
+  ];
+
+  chipX(active) {
+    const b = 'font-family:Archivo,sans-serif;font-size:13px;padding:8px 14px;min-height:40px;border-radius:2px;cursor:pointer;transition:background .2s,border-color .2s,color .2s;';
+    return active
+      ? b + 'border:1px solid var(--olive-600,#6f7c33);background:var(--accent-quiet,rgba(111,124,51,.12));color:var(--olive-600,#6f7c33);'
+      : b + 'border:1px solid var(--border-subtle,rgba(42,32,48,.16));background:transparent;color:var(--text-body,#4a3f50);';
+  }
+  reducedX() { return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+
+  learningViz() {
+    const s = this.state, ease = 'cubic-bezier(.2,.8,.2,1)', plum = '#56466b';
+    const flips = s.flips || {}, idx = s.mythIdx || 0, reviews = s.reviews || [1, 4, 10];
+    const myths = this.MYTHS.map((m, i) => {
+      const g = flips[i], flipped = g !== undefined, last = i === this.MYTHS.length - 1;
+      const set = (v) => this.setState(st => ({ flips: { ...(st.flips || {}), [i]: v } }));
+      return {
+        claim: m.claim, why: m.why, cite: m.cite, num: '0' + (i + 1),
+        verdict: m.truth ? 'Evidence' : 'Myth',
+        feedback: g === m.truth ? 'You called it.' : 'Most people guess the same way.',
+        sayTrue: () => set(true), sayMyth: () => set(false),
+        innerStyle: 'position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .8s ' + ease + ';transform:rotateY(' + (flipped ? 180 : 0) + 'deg);',
+        nextLabel: 'Again',
+        next: () => this.setState(st => { const f = { ...(st.flips || {}) }; delete f[i]; return { flips: f }; }),
+        mobNextLabel: last ? 'Start over' : 'Next claim',
+        mobNext: () => this.setState(last ? { mythIdx: 0, flips: {} } : { mythIdx: i + 1 }),
+      };
+    });
+    const mythsM = [myths[idx]].map(m => ({ ...m, nextLabel: m.mobNextLabel, next: m.mobNext }));
+    const mythDots = this.MYTHS.map((m, i) => ({ label: 'Claim ' + (i + 1), onClick: () => this.setState({ mythIdx: i }), style: (i === idx ? 'outline:2px solid rgba(86,70,107,.35);outline-offset:3px;' : '') + 'width:8px;height:8px;border-radius:50%;box-sizing:border-box;transition:background .3s;border:1.5px solid ' + (flips[i] !== undefined ? plum : 'rgba(42,32,48,.32)') + ';background:' + (flips[i] !== undefined ? plum : 'transparent') + ';' }));
+
+    const S0 = 1.5, grow = 2.5, rev = [...reviews].sort((a, b) => a - b);
+    const R = (tt, list) => { let lr = 0, k = 0; list.forEach(d => { if (d <= tt) { lr = d; k++; } }); return Math.exp(-(tt - lr) / (S0 * Math.pow(grow, k))); };
+    const X = (tt) => (40 + tt / 30 * 550).toFixed(1), Y = (r) => (200 - r * 170).toFixed(1);
+    const path = (list) => { let p = ''; for (let i = 0; i <= 300; i++) { const tt = i / 10; p += (i ? 'L' : 'M') + X(tt) + ' ' + Y(R(tt, list)); } return p; };
+    const pct = (v) => Math.round(v * 100) + '%';
+    return {
+      myths, mythsM, mythDots, mythProgress: Object.keys(flips).length + ' of ' + this.MYTHS.length + ' answered',
+      fcChips: [1, 2, 4, 7, 10, 14, 21].map(d => ({ label: 'Day ' + d, on: reviews.includes(d), onClick: () => this.setState(st => { const r = st.reviews || [1, 4, 10]; return { reviews: r.includes(d) ? r.filter(x => x !== d) : [...r, d] }; }), style: this.chipX(reviews.includes(d)) })),
+      fcPath: path(rev), fcBase: path([]), fcMarks: rev.map(d => 'M' + X(d) + ' 30V200').join('') || 'M0 0',
+      fcEnd: pct(R(30, rev)), fcBaseEnd: pct(R(30, [])),
+    };
+  }
+
   state = {
     calStep: 0, calPrediction: null, calConfidence: null,
     studyChecks: {}, studySubmittedFlag: false,
@@ -252,6 +408,7 @@ class Component extends DCLogic {
     const plumCalloutStyle = { background: 'rgba(86,70,107,.1)', boxShadow: 'inset 0 0 0 1px rgba(86,70,107,.28)' };
 
     return {
+      ...this.learningViz(),
       sageCalloutStyle, plumCalloutStyle,
       calStepIs0: s.calStep === 0, calStepIs1: s.calStep === 1, calStepIs2: s.calStep === 2, calStepIs3: s.calStep === 3,
       predictYesStyle: predictBtn(true), predictNoStyle: predictBtn(false),

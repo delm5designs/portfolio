@@ -20,6 +20,8 @@
     body { margin: 0; background: var(--surface-page, #fbf7ea); }
     a { color: var(--olive-600, #6f7c33); text-decoration: none; }
     a:hover { color: var(--plum-500, #56466b); }
+    .rp-field { height: 320px; }
+    @media (max-width: 720px) { .rp-field { height: 460px; } }
   </style>
 </helmet>
 
@@ -58,10 +60,45 @@
 
   </div>
 
+  <div ref="{{ rippleRef }}" onClick="{{ onRipple }}" class="rp-field" style="position:relative;overflow:hidden;border:1px solid var(--border-subtle);border-radius:2px;cursor:crosshair;display:flex;align-items:center;justify-content:center;touch-action:manipulation;">
+    <div style="position:relative;z-index:2;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;padding:36px 32px;background:radial-gradient(closest-side,#fbf7ea 62%,rgba(251,247,234,0));">
+      <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--olive-600,#6f7c33);">Click anywhere</div>
+      <div style="font-family:Newsreader,serif;font-weight:400;letter-spacing:-0.024em;line-height:1.05;margin:0;color:var(--text-strong,#2a2030);font-size:34px;">Every review leaves a <em style="color:var(--plum-500,#56466b);">ring</em></div>
+      <div style="font-size:13.5px;color:var(--text-muted,#6b5f72);">{{ rippleLabel }}</div>
+    </div>
+  </div>
+
 </div>
 
 <dc-import name="SiteFooter" hint-size="100%,180px"></dc-import>
 
 </x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { ripples: 0 };
+  rippleRef = React.createRef();
+  ripple(e) {
+    const el = this.rippleRef.current; if (!el) return;
+    const r = el.getBoundingClientRect(), k = r.width / el.offsetWidth;
+    const x = (e.clientX - r.left) / k, y = (e.clientY - r.top) / k;
+    this.setState(s => ({ ripples: s.ripples + 1 }));
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const size = Math.max(el.offsetWidth, el.offsetHeight) * 1.6 + 'px';
+    const d = document.createElement('div');
+    d.style.cssText = 'position:absolute;left:' + x + 'px;top:' + y + 'px;border:2px solid #4e7a55;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;box-sizing:border-box;';
+    el.appendChild(d);
+    const a = d.animate([
+      { width: '0px', height: '0px', borderColor: '#4e7a55', opacity: 1 },
+      { offset: 0.5, borderColor: '#6f7c33', opacity: 0.8 },
+      { width: size, height: size, borderColor: '#56466b', opacity: 0 },
+    ], { duration: 3200, easing: 'cubic-bezier(.25,.1,.25,1)' });
+    a.onfinish = () => d.remove();
+  }
+  renderVals() {
+    const n = this.state.ripples;
+    return { rippleRef: this.rippleRef, onRipple: (e) => this.ripple(e), rippleLabel: n ? n + (n === 1 ? ' ring' : ' rings') + ' so far' : 'Try a few in a row' };
+  }
+}
+</script>
 </body>
 </html>
