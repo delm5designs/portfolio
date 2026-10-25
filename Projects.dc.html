@@ -16,17 +16,11 @@
   <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/tokens/motion.css">
   <link rel="stylesheet" href="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/styles.css">
   <script src="_ds/morana-design-system-7dc00243-9061-4778-968a-63ab84ccbd99/_ds_bundle.js"></script>
+  <script src="./image-slot.js"></script>
   <style>
     body { margin: 0; background: var(--surface-page, #fbf7ea); }
     a { color: var(--olive-600, #6f7c33); text-decoration: none; }
     a:hover { color: var(--plum-500, #56466b); }
-    .cs-tabs { display: flex; }
-    .cs-tabs button { flex: 1; }
-    @media (max-width: 720px) {
-      .cs-tabs { display: grid; grid-template-columns: 1fr 1fr; }
-      .cs-tabs button { min-height: 48px; }
-      .cs-pad { padding: 20px !important; }
-    }
   </style>
 </helmet>
 
@@ -35,9 +29,65 @@
 <div style="max-width:1140px;margin:0 auto;padding:64px 5vw 120px;display:flex;flex-direction:column;gap:48px;font-family:Archivo,sans-serif;">
 
   <x-import component-from-global-scope="MoranaDesignSystem_7dc002.SectionHeading" hint-size="100%,160px"
-    eyebrow="Case studies" title="Same method, different rooms" accent="method"
-    lead="Onboarding, capacity-building, curriculum, community. Find what people actually need to be able to do, then build backwards from that. Each opens into context, approach, deliverables, and outcome.">
+    eyebrow="Case studies" title="Same method, different" accent="rooms"
+    lead="Onboarding, capacity-building, curriculum, community. Find what people need to be able to do, then build backwards from that. One project in full, the rest in brief.">
   </x-import>
+
+  <div id="onboarding-case" style="display:flex;flex-direction:column;gap:40px;padding-top:40px;border-top:1px solid var(--border-subtle);">
+    <div style="display:flex;flex-direction:column;gap:10px;max-width:760px;">
+      <div style="font-size:13px;font-weight:600;color:var(--olive-600,#6f7c33);">Featured case study</div>
+      <h2 style="font-family:Newsreader,serif;font-weight:400;font-size:clamp(28px,3.4vw,38px);line-height:1.1;letter-spacing:-0.02em;margin:0;color:var(--text-strong,#2a2030);text-wrap:pretty;">Turning experts into educators - a clearer onboarding for volunteer educators</h2>
+      <div style="font-size:14px;color:var(--text-muted,#6b5f72);">Internal educator network / EMEA and LATAM / 1.5 years</div>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:48px;">
+      <div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:32px;">
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:13px;font-weight:600;color:var(--text-strong,#2a2030);">Context</div>
+          <p style="margin:0;font-size:16px;line-height:1.6;max-width:60ch;">Employees who volunteer, on top of their day jobs, to share what they know - as subject-matter experts, mentors, hosts, trainers and speakers. Each brings real expertise in their own field, but not necessarily the skills to pass it on.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:13px;font-weight:600;color:var(--text-strong,#2a2030);">Problem</div>
+          <p style="margin:0;font-family:Newsreader,serif;font-size:21px;line-height:1.4;max-width:46ch;color:var(--text-strong,#2a2030);">"I know my subject. I don't know how to teach it."</p>
+          <p style="margin:0;font-size:15px;line-height:1.6;max-width:60ch;color:var(--text-body,#4a3f50);">An onboarding process existed, but it was loosely structured and treated every role the same. Knowing something well and helping someone else learn it are different skills - and onboarding needed to support the second one.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="font-size:13px;font-weight:600;color:var(--text-strong,#2a2030);">What I did - three decisions</div>
+          <div style="display:flex;gap:16px;align-items:baseline;">
+            <span style="font-size:12px;color:var(--olive-600,#6f7c33);flex-shrink:0;">01</span>
+            <p style="margin:0;font-size:15px;line-height:1.6;max-width:58ch;"><strong style="font-weight:600;">Restructured the existing onboarding instead of replacing it.</strong> What already worked stayed; the gaps got a clear sequence. One unified approach gave mentors, hosts, trainers and speakers the same backbone while leaving the content theirs.</p>
+          </div>
+          <div style="display:flex;gap:16px;align-items:baseline;">
+            <span style="font-size:12px;color:var(--olive-600,#6f7c33);flex-shrink:0;">02</span>
+            <p style="margin:0;font-size:15px;line-height:1.6;max-width:58ch;"><strong style="font-weight:600;">Built reflection into onboarding.</strong> Each new educator works through how they already explain their subject before restructuring it. Starting from their own habits makes the method feel like an upgrade, not a correction.</p>
+          </div>
+          <div style="display:flex;gap:16px;align-items:baseline;">
+            <span style="font-size:12px;color:var(--olive-600,#6f7c33);flex-shrink:0;">03</span>
+            <p style="margin:0;font-size:15px;line-height:1.6;max-width:58ch;"><strong style="font-weight:600;">Gave every educator a go-to person.</strong> Volunteers drop out quietly when they get stuck and have no one to ask. A named contact for questions turned onboarding from a one-off event into ongoing support.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:20px;">
+        <div style="font-size:13px;font-weight:600;color:var(--text-strong,#2a2030);">Evidence</div>
+        <div style="display:flex;flex-direction:column;gap:6px;padding:24px 28px;border:1px solid var(--border-subtle);border-radius:2px;background:var(--surface-card,#fdfbf4);">
+          <span style="font-family:Newsreader,serif;font-weight:300;font-size:clamp(44px,5vw,56px);line-height:1;letter-spacing:-0.024em;color:var(--olive-600,#6f7c33);">10%+</span>
+          <span style="font-size:15px;line-height:1.5;max-width:32ch;">rise in new internal educators joining the network</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;padding:24px 28px;border:1px solid var(--border-subtle);border-radius:2px;background:var(--surface-card,#fdfbf4);">
+          <span style="font-family:Newsreader,serif;font-size:22px;line-height:1.3;color:var(--text-strong,#2a2030);">More active educators</span>
+          <span style="font-size:15px;line-height:1.5;max-width:36ch;">Existing members of the network took on more sessions once they had a shared approach and someone to turn to.</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px;padding:24px 28px;background:var(--surface-sunken,#f3ecd2);border-radius:2px;max-width:760px;">
+      <div style="font-size:13px;font-weight:600;color:var(--text-strong,#2a2030);">What I'd do differently</div>
+      <p style="margin:0;font-size:16px;line-height:1.6;">Measure how active educators were before launch. The rise in new educators was easy to count; the rise in activity was clear to everyone but harder to put a number on.</p>
+    </div>
+  </div>
+
+  <h2 style="font-family:Newsreader,serif;font-weight:400;font-size:clamp(24px,2.6vw,30px);letter-spacing:-0.02em;margin:24px 0 0;color:var(--text-strong,#2a2030);">More projects</h2>
 
   <div style="display:flex;gap:10px;flex-wrap:wrap;">
     <sc-for list="{{ filters }}" as="f" hint-placeholder-count="7">
@@ -53,29 +103,23 @@
             <div style="font-family:Newsreader,serif;font-size:21px;margin-bottom:4px;">{{ p.title }}</div>
             <div style="font-size:13px;color:var(--text-muted,#6b5f72);">{{ p.scope }}</div>
           </div>
-          <x-import component-from-global-scope="MoranaDesignSystem_7dc002.RingMark" hint-size="36px,36px" size="{{ 36 }}" rings="{{ 4 }}" completed="{{ p.seenCount }}"></x-import>
+          <x-import component-from-global-scope="MoranaDesignSystem_7dc002.RingMark" hint-size="36px,36px" size="{{ 36 }}" rings="{{ 4 }}" completed="{{ p.openCount }}"></x-import>
         </div>
-        <div style="border-top:1px solid var(--border-subtle);">
-          <div class="cs-tabs" style="gap:1px;background:var(--border-subtle);border-bottom:1px solid var(--border-subtle);">
-            <sc-for list="{{ p.steps }}" as="step" hint-placeholder-count="4">
-              <button onclick="{{ step.onClick }}" style="{{ step.style }}">{{ step.label }}</button>
-            </sc-for>
-          </div>
-          <div class="cs-pad" style="padding:24px 28px;display:flex;flex-direction:column;gap:14px;">
-            <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--olive-600,#6f7c33);">{{ p.current.num }} {{ p.current.label }}</div>
-            <p style="margin:0;font-size:16px;line-height:1.6;max-width:62ch;">{{ p.current.content }}</p>
-            <div><x-import component-from-global-scope="MoranaDesignSystem_7dc002.Button" hint-size="160px,40px" variant="secondary" size="sm" on-click="{{ p.onNext }}">{{ p.nextLabel }}</x-import></div>
-          </div>
+        <div style="display:flex;flex-direction:column;gap:1px;background:var(--border-subtle);border-top:1px solid var(--border-subtle);">
+          <sc-for list="{{ p.steps }}" as="step" hint-placeholder-count="4">
+            <div style="background:var(--surface-card,#fdfbf4);">
+              <div style="padding:14px 28px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;" onclick="{{ step.onClick }}">
+                <span style="font-size:15px;">{{ step.label }}</span>
+                <span style="font-size:12px;color:var(--olive-600,#6f7c33);">{{ step.indicator }}</span>
+              </div>
+              <sc-if value="{{ step.open }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:0 28px 20px;font-size:15px;line-height:1.6;">{{ step.content }}</div>
+              </sc-if>
+            </div>
+          </sc-for>
         </div>
       </div>
     </sc-for>
-    <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
-      <div style="border:1px solid var(--border-subtle);border-radius:2px;background:var(--surface-card,#fdfbf4);padding:32px 28px;display:flex;flex-direction:column;gap:10px;">
-        <div style="font-family:Newsreader,serif;font-size:19px;color:var(--text-strong,#2a2030);">No case study written up under this thread yet.</div>
-        <p style="margin:0;font-size:15px;line-height:1.6;color:var(--text-body,#4a3f50);max-width:56ch;">{{ emptyTopic }} runs through my work, but it doesn't have a published case study yet. The credential behind this thread is on the Credentials page.</p>
-        <a href="{{ emptyHref }}" style="font-size:14.5px;margin-top:2px;">See the credential &rarr;</a>
-      </div>
-    </sc-if>
   </div>
 
 </div>
@@ -85,7 +129,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { activeTopic: 'All', step: {}, seen: {} };
+  state = { activeTopic: 'All', open: {} };
 
   TOPICS = ['Human-centric learning', 'Accessibility-first', 'Behavioural design & gamification', 'Mentoring & coaching', 'AI-era ways of working', 'Community & youth support models'];
 
@@ -156,32 +200,23 @@ class Component extends DCLogic {
       onClick: () => this.setState({ activeTopic: t }),
     }));
 
-    const filtered = s.activeTopic === 'All' ? this.PROJECTS : this.PROJECTS.filter(p => p.tags.includes(s.activeTopic));
+    const rest = this.PROJECTS.filter(p => p.key !== 'onboarding');
+    const filtered = s.activeTopic === 'All' ? rest : rest.filter(p => p.tags.includes(s.activeTopic));
 
     const visibleProjects = filtered.map(p => {
-      const cur = s.step[p.key] || 0;
-      const seen = s.seen[p.key] || 1;
-      const go = (n) => this.setState({ step: { ...s.step, [p.key]: n }, seen: { ...s.seen, [p.key]: Math.max(seen, n + 1) } });
-      const steps = p.steps.map((st, i) => ({
-        label: st.label,
-        onClick: () => go(i),
-        style: `font-family:Archivo,sans-serif;font-size:13.5px;padding:13px 8px;border:none;cursor:pointer;transition:background .2s,color .2s;background:${i === cur ? 'var(--accent-quiet,rgba(111,124,51,.14))' : 'var(--surface-card,#fdfbf4)'};color:${i === cur ? 'var(--olive-600,#6f7c33)' : i < seen ? 'var(--text-strong,#2a2030)' : 'var(--text-muted,#6b5f72)'};`,
-      }));
-      const last = cur === p.steps.length - 1;
-      return {
-        title: p.title, scope: p.scope, steps, seenCount: seen,
-        current: { ...p.steps[cur], num: '0' + (cur + 1) },
-        nextLabel: last ? 'Back to context' : 'Next: ' + p.steps[cur + 1].label,
-        onNext: () => go(last ? 0 : cur + 1),
-      };
+      const openMap = s.open[p.key] || {};
+      const openCount = Object.values(openMap).filter(Boolean).length;
+      const steps = p.steps.map(st => {
+        const open = !!openMap[st.key];
+        return {
+          ...st, open, indicator: open ? 'Hide' : 'Expand',
+          onClick: () => this.setState({ open: { ...s.open, [p.key]: { ...openMap, [st.key]: !open } } }),
+        };
+      });
+      return { title: p.title, scope: p.scope, steps, openCount };
     });
 
-    return {
-      filters, visibleProjects,
-      isEmpty: visibleProjects.length === 0,
-      emptyTopic: s.activeTopic,
-      emptyHref: `Credentials.dc.html?topic=${encodeURIComponent(s.activeTopic)}`,
-    };
+    return { filters, visibleProjects };
   }
 }
 
